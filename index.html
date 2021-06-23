@@ -14,20 +14,24 @@
 
 	<!-- Milligram CSS -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
-
+	<link rel="stylesheet" href="style/style.css">
+	
+	
   </head>
   <body>
-  <main class="container">
+  <div class="row">
+  <div class="column column-60 column-offset-20">
+
 	&nbsp;&nbsp;
 	<br>
 	<br>
 	<h1> Toward self organized control </h1>
-	<h3> Using neural cellular automaton to robustly control a cartpole </h3>
-	<h5> Alexandre Variengien, Stefano Nichele, Tom Glover, Sidney Pontes-Filho</h5>
+	<h3 class="nobold"> Using neural cellular automaton to robustly control a cartpole </h3>
+	<h5 class="nobold"> Alexandre Variengien, Stefano Nichele, Tom Glover, Sidney Pontes-Filho</h5>
 	<!-- Feel free to add affiliation as you want -->
-	<video autoplay loop width="1000">
+	<video autoplay loop width="900">
 		<source src="videos/grid_and_envi/noise_no_damage_crop.mp4"
-				type="video/mp4">
+				type="video/mp4" class="center" >
 		Sorry, your browser doesn't support embedded videos.
 	</video>
 	<br>
@@ -124,26 +128,32 @@
 			to solve the task.
 		</p>
 
-		<h4> Cell position </h4>
+		<h4> Input encoding </h4>
 		<p>
 			For this task, we use redundancy in the inputs: each of the 4 physical observations of the environment is linked to 2 input cells.
-			We thought it could improve the opportunity for information combination and robustness.
+			We thought it could improve the opportunity for information combination and robustness. 
+			Note that the type of information contained in the input is not directly provided. To know which observation 
+			each input cell encodes must be recover from the spatial position of the inputs or from the value of the information channel.
 		</p>
+
+		<h4> Cell position </h4>
 		<p>
 			The 8 inputs are arranged in an octagonal shape (dotted line) with the two outputs being offset by 2 cells from the center of the octagon.
 			We chose this configuration to ensure an equal distribution of the distance between each input information and output.
 		
 		
 		<div class="row">
-			<div class="column column-50 column-offset-25">
-				<img src = "img/io_position.png" width="250" >
+			<div class="column column-60 column-offset-20" class="txtcenter">
+				<img src = "img/io_position.png" width="70%" class="center" >
+				<br>
+				<small class="txtcenter">The position of input (in red) and output cells (in yellow).</small>
 			</div>
 		</div>
 		</p>
 	
 	<h2> Model </h2>
 		<p>
-		Except the states, the neural CA architecture we used is similar to the one described here. [<b>Self-classifying MNIST Digits</b>]
+		Except the design of the cell states, the neural CA architecture we used is similar to the one described here. [<b>Self-classifying MNIST Digits</b>]
 		The perception layer is composed of 20 learnable 3x3 filters, and the single hidden layers counts 30 units.
 		In total our model has 1854 learnable parameters.
 		</p>
@@ -151,7 +161,8 @@
 		<p>
 		Our model can be abstracted as a black box function that takes inputs (that will be fed to the information channel of input cells)
 		and transform them in outputs (the information channel of output cells). This function is differentiable with respect to its
-		parameters and thus they can be optimized as it's usually done for any common machine learning model.
+		parameters (the neural network used as update rule) and thus they can be optimized with classical gradient descent techniques.
+		In this cased we used the Adam optimized provided by the TensorFlow library. 
 		
 		To tackle the cart-pole problem, we used Deep Q-learning [<b>citation</b>] where the usual artificial neural network is seamlessly replace by the neural CA.
 		</p>
@@ -161,7 +172,14 @@
 			To achieve long term stability and we added a penalty for 
 			cells that have channels value out of bound [-5,5].
 			
-			<b> Add a formula </b>
+			<div class="row">
+				<div class="column column-80 column-offset-10" >
+					<img src = "img/loss_formula.png" width="100%" class="center"  >
+					<br>
+					<small>N is the size of the grid, lambda a parameters to control the amount of overflow penalty.</small>
+				</div>
+			</div>
+
 			</p>
 		<h4>Model initialization </h4>
 			<p>
@@ -176,8 +194,8 @@
 				We found that it was able to learn with a reasonably low error after several thousand learning steps.
 			</p>
 			<p>
-				This initialization enables the neural CA to learn to make an information link 
-				from input to output and to stabilize the state of the cells.
+				This initialization enables the neural CA to learn to stabilize the state of the cells, make an information link 
+				from input to output, and an primitive combination of the input values at the output cells.
 			</p>
 		<h4> Robustness </h4>
 			<p>
@@ -185,12 +203,16 @@
 				
 				A damage consist in the states of the cells in a circle of the grid replaced by uniform random values in [-1,1], as shown
 				in black below. Note that a damage impact all channel that can be changed and that input are not affected by damage while outputs are.
+				
+				
 				<div class="row">
-					<div class="column column-offset-25">
-						<img src="img/damage.png" width=500> <br>
-						A damage shown on the information channel.
+					<div class="column column-60 column-offset-20">
+						<img src="img/damage.png" width="70%" class="center" > <br>
+	
+						<small>A damage shown on the information channel. The shape of the damage is an irregular circle due to rasterization effect.</small>
 					</div>
 				</div>
+
 				
 			</p>
 	<h2> Results </h2>
@@ -199,10 +221,11 @@
 	the pole balancing and of the state of the CA.
 	It was able to balance the pole for more than 10k simulation steps. A video of 9 independent
 	runs for 1000 simulation steps is shown below.
+	<br>
 	
-	<video autoplay loop width="1000">
+	<video autoplay loop width="700">
 		<source src="videos/mosaics/mosaic_no_damage_no_noise_small.mp4"
-				type="video/mp4" width=100>
+				type="video/mp4" width=100 class="center" >
 		Sorry, your browser doesn't support embedded videos.
 	</video>
 	
@@ -235,5 +258,6 @@
 	
 	
 	
-  </main>
+  </div>
+  </div>
   </body>
