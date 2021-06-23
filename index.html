@@ -1,6 +1,3 @@
-
-<!doctype html>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -15,12 +12,11 @@
 	<!-- Milligram CSS -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
 
+	<link rel="stylesheet" href="style.css">
+
   </head>
-  <body>
+  <body class="margin-m">
   <main class="container">
-	&nbsp;&nbsp;
-	<br>
-	<br>
 	<h1> Toward self organized control </h1>
 	<h3> Using neural cellular automaton to robustly control a cartpole </h3>
 	<h5> Alexandre Variengien, Stefano Nichele, Tom Glover, Sidney Pontes-Filho</h5>
@@ -30,13 +26,12 @@
 				type="video/mp4">
 		Sorry, your browser doesn't support embedded videos.
 	</video>
-	<br>
-	<br>
-	<h2> Introduction </h2>
+
+	<h2 class="margin-m"> Introduction </h2>
 		<p>
-			One of the most incredible feat of life could be the development of the complexity of a human brain from a single cell. 
-			The field of neurodevelopment has been trying 
-			to tackle this problem for decades. These studies lead to the discovery of intricate mechanisms where gradients of chemicals 
+			One of the most incredible feat of life could be the development of the complexity of a human brain from a single cell.
+			<!-- trying to tackle gave the sense that it was completely unsuccessful  -->
+			The field of neurodevelopment has been working on this problem for decades. These studies lead to the discovery of intricate mechanisms where gradients of chemicals
 			and local cell interaction shaped
 			the differentiation of pre-neural cells and the organization of their connections. [<b> citation needed</b>]
 		</p>
@@ -78,7 +73,7 @@
 			Some effort has been made to include an automatic way to incrementally design neural network architectures. These techniques include
 			the use of genetic algorithms [<b>citation</b>], pruning of connection [<b>citation</b>] or with the introduction
 			of Growing Neural Networks. [<b>Growing Artificial Neural Networks, John Mixter and Ali Akoglu</b>]
-			Nonetheless, in these works the phases where the network is growing and when it computes use distinct procedures.
+			Nonetheless, in these works the process is a tool of navigating the topological parameter space, rather then treating the learning as a developmental problem.
 		</p>
 
 		<p>
