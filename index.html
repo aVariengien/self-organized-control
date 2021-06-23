@@ -23,6 +23,8 @@
 	<br>
 	<h1> Toward self organized control </h1>
 	<h3> Using neural cellular automaton to robustly control a cartpole </h3>
+	<h5> Alexandre Variengien, Stefano Nichele, Tom Glover, Sidney Pontes-Filho</h5>
+	<!-- Feel free to add affiliation as you want -->
 	<video autoplay loop width="1000">
 		<source src="videos/grid_and_envi/noise_no_damage_crop.mp4"
 				type="video/mp4">
@@ -32,33 +34,36 @@
 	<br>
 	<h2> Introduction </h2>
 		<p>
-			One of the most incredible feat of life is the development of the complexity of a human brain develop from a single cell. 
+			One of the most incredible feat of life could be the development of the complexity of a human brain from a single cell. 
 			The field of neurodevelopment has been trying 
 			to tackle this problem for decades. These studies lead to the discovery of intricate mechanisms where gradients of chemicals 
-			and local cell interaction rules shaped
+			and local cell interaction shaped
 			the differentiation of pre-neural cells and the organization of their connections. [<b> citation needed</b>]
 		</p>
 		<p>
-			Even after the brain is considered fully grown, this process does not stops. New neurons are formed every seconds until
-			death, and the shape and the importance of their connections always change.[<b> citation needed</b>] This neural plasticity is lead by 
+			Even after the brain is considered fully grown, this process does not stop. New neurons are formed every second until
+			death, and the shape and the importance of their connections always change.[<b> citation needed</b>] This neural plasticity is led by 
 			the sensory inputs received by the individual and seems to be at the root of the emergence of intelligence. 
-			In addition to the ability to cope with a changing environment, this plasticity lead to an incredible robustness. 
-			For instance the processing visual information can be deferred to the auditive cortex if the first is impaired. [<b> citation needed</b>]
+			In addition to the ability to cope with a changing environment, this plasticity provides an incredible robustness. 
+			For instance, the processing of visual information can be deferred to the auditive cortex if the first is impaired. [<b> citation needed</b>]
 		</p>
 		<p>
-			By studying the underlying biological phenomena, in fact it seems to exists
-			a continuum between the phenomena we usually call <i> growing</i>, <i> learning</i> and <i>computing</i>. 
-			This biological proximity
-			is also supported by the recent discovery of the role of electrical activity during morphogenesis. 
-			The same ion channels are used both for local communication between no neural cells during embryogenesis and 
+			The neural plasticity can be thought as part of the whole biological mechanism directed toward homeostasis of both
+			shape and function.
+			This conceptual proximity is also justified by biological evidence like the recent discovery of the role of electrical 
+			activity during morphogenesis. 
+			The same ion channels are used both for local communication between non neural cells during embryogenesis and 
 			in the neurons to carry action potentials. [<b> Mike Levin et al. on flatworms</b>]
+			More generally, it seems to exists
+			a continuum between the phenomena we usually call <i> growing</i>, <i> learning</i> and <i>computing</i>. 
+			Each of these abilities seems be a different aspect of the same underlying self-organizing system.
 		</p>
 		<p>
-			Moreover, it seems that the DNA doesn't encode for a precise assembly plan of the neural networks.
-			In fact, there is an information gap between the size of the DNA and the complexity of 
+			Moreover, it seems that the DNA doesn't encode precise details of the neural network.
+			There is an information gap between the size of the DNA and the complexity of 
 			the neural network that has been previously called <i>genomic bottleneck</i> [<b>A critique of pure learning ..., Anthony M. Zador</b>]. 
-			The DNA, through the shape of the proteins it encodes, specify the local behavior of cells. The neural network is then a structure 
-			that emerges through these local rules and yield a useful structure of the inputs received by the senses. [<b>The Challenge Of Complexity, Wolfgang Banzhaf</b>]
+			The DNA, through the shape of the proteins it encodes, specifies the local behavior of cells. The neural network is then a structure 
+			that emerges through these local interactions and yield a useful biological processing of the inputs received by the senses. [<b>The Challenge Of Complexity, Wolfgang Banzhaf</b>]
 		</p>
 		
 		<p>
@@ -70,41 +75,41 @@
 		</p>
 		
 		<p>
-			Related works that attempt to add a growing phase to machine learning models (maybe not to discuss here): 
-			[<b>Growing Artificial Neural Networks, John Mixter and Ali Akoglu</b>],+ the field of prunning of ANN <br>
-			[<b>Growing NCA</b>], <br> 
-			[<b>CA-NEAT: Evolved Compositional Pattern Producing Networks for Cellular Automata Morphogenesis and Replication, Stefano Nichele et al</b>]
+			Some effort has been made to include an automatic way to incrementally design neural network architectures. These techniques include
+			the use of genetic algorithms [<b>citation</b>], pruning of connection [<b>citation</b>] or with the introduction
+			of Growing Neural Networks. [<b>Growing Artificial Neural Networks, John Mixter and Ali Akoglu</b>]
+			Nonetheless, in these works the phases where the network is growing and when it computes use distinct procedures.
 		</p>
-		
+
 		<p>
 			In this work we attempt at bridging the gap between growth and computation by using neural cellular automaton (CA) [<b>Growing NCA</b>].
-			This is a spatially distributed system composed of cells that interact through local interaction. Their update rule consist in 
+			This is a spatially distributed system composed of cells that interact through local interaction. Their update rule consists in 
 			an artificial neural networks and thus can be optimized through
-			the classical and efficient gradient descent based techniques. 
-			The local rule encodes both
-			the developmental process - the transformation from a random grid to a configuration suitable for computation- and for the
+			the classical and efficient gradient descent-based techniques. 
+			Even if the learning process is still happening through a procedure exterior to the system, the local rules encodes both
+			the developmental process - the transformation from a random grid to a configuration suitable for computation- and the
 			information processing itself. 
 			We found that the cells were able to transmit and combine in a meaningful way the information from input cells to output cells 
-			used as readout.
-			The system demonstrate long term stability and robustness to noise and damage. 
+			used as a readout.
+			The system demonstrates long-term stability and robustness to noise and damage. 
 			We illustrate these abilities on a simple control task as a proof of concept.
 		</p>
 		
-	<h3> The pole balancing task </h2>
+	<h2> The pole balancing task </h2>
 		
 		<p>
 		The cart-pole problem is a commonly used toy problem in the reinforcement learning community. In this
-		environment, an agent can observe the pole angle and angular velocity, the cart position and its linear velocity.
-		Based on these information, it must decide whether to apply a force on the left or on the right of the cart in order
+		environment, an agent can observe the pole angle and angular velocity, the cart position, and its linear velocity.
+		Based on these observations, it must decide whether to apply a force on the left or the right of the cart in order
 		to maximize the time spent with the pole on the top.
 		
 		We chose this problem because of its low number of input and output that enables us to
-		use a small scale grid and an easy experimentation environment.
+		use a small-sized grid and an easy experimentation environment.
 		</p>
 
-	<h3> Cell state </h3>
+	<h2> Cell state </h2>
 		<p>
-			There are 3 types of cell in a grid: the normal cells, the input and output cells.
+			There are 3 types of cells in a grid: the normal cells, the input, and output cells.
 		</p>
 		<p>
 			The state of each cell is composed of 6 channels. The first is the <i> information channel</i> where meaningful
@@ -113,7 +118,7 @@
 		</p>
 		<p>
 			The state of the input cell cannot be changed, the information channel is set to the value to input at this cell
-			and the other channel expect the output identifier are set to 1.
+			and the other channel expects the output identifier is set to 1.
 			
 			The values of the information channel of the output cells are used as the output of the system to be optimized
 			to solve the task.
@@ -121,8 +126,8 @@
 
 		<h4> Cell position </h4>
 		<p>
-			For this task, we use redundancy in the inputs: each of the 4 physical observation of the environment is linked to 2 input cells.
-			We though it could improve the opportunity for information combination and robustness.
+			For this task, we use redundancy in the inputs: each of the 4 physical observations of the environment is linked to 2 input cells.
+			We thought it could improve the opportunity for information combination and robustness.
 		</p>
 		<p>
 			The 8 inputs are arranged in an octagonal shape (dotted line) with the two outputs being offset by 2 cells from the center of the octagon.
@@ -136,13 +141,13 @@
 		</div>
 		</p>
 	
-	<h3> Model </h3>
+	<h2> Model </h2>
 		<p>
 		Except the states, the neural CA architecture we used is similar to the one described here. [<b>Self-classifying MNIST Digits</b>]
-		The perception layer is composed of 20 learnable 3x3 filter, and the single hidden layers counts 30 units.
+		The perception layer is composed of 20 learnable 3x3 filters, and the single hidden layers counts 30 units.
 		In total our model has 1854 learnable parameters.
 		</p>
-	<h3> Training procedure </h3>
+	<h2> Training procedure </h2>
 		<p>
 		Our model can be abstracted as a black box function that takes inputs (that will be fed to the information channel of input cells)
 		and transform them in outputs (the information channel of output cells). This function is differentiable with respect to its
@@ -160,15 +165,15 @@
 			</p>
 		<h4>Model initialization </h4>
 			<p>
-				We found that when trained directly the model was stuck in a local minima where it outputted constant values, no matter
+				We found that when trained directly the model was stuck in a local minimum where it outputted constant values, no matter
 				the state of the inputs.
 				We think that this is due to the fact that the intermediate cells between inputs lead to a vanishing to the gradient as
 				in vanilla Recurrent Neural Networks.
 			</p>
 			<p>
 				To solve this problem, we first optimize the neural CA for an easier task: 
-				both outputs where optimized to compute the mean of the inputs. 
-				We found that it was able to learn with a reasonably low error after several thousands learning steps.
+				both outputs were optimized to compute the mean of the inputs. 
+				We found that it was able to learn with a reasonably low error after several thousand learning steps.
 			</p>
 			<p>
 				This initialization enables the neural CA to learn to make an information link 
@@ -176,7 +181,7 @@
 			</p>
 		<h4> Robustness </h4>
 			<p>
-				In order to learn to recover from damage, before each learning step the grid have 0.5 probability of receiving a damage.
+				To learn to recover from damage, before each learning step the grid has 0.5 probability of receiving damage.
 				
 				A damage consist in the states of the cells in a circle of the grid replaced by uniform random values in [-1,1], as shown
 				in black below. Note that a damage impact all channel that can be changed and that input are not affected by damage while outputs are.
@@ -188,6 +193,21 @@
 				</div>
 				
 			</p>
+	<h2> Results </h2>
+	
+	Our model was able to solve the cartpole problem and achieve long-term stability of both
+	the pole balancing and of the state of the CA.
+	It was able to balance the pole for more than 10k simulation steps. A video of 9 independent
+	runs for 1000 simulation steps is shown below.
+	
+	<video autoplay loop width="1000">
+		<source src="videos/mosaics/mosaic_no_damage_no_noise_small.mp4"
+				type="video/mp4" width=100>
+		Sorry, your browser doesn't support embedded videos.
+	</video>
+	
+	
+	
 		
 	
 	
@@ -195,7 +215,7 @@
 	and enables great robustness such as rewiring some part
 	of 
 	
-	Despites the complexity of this phenomena and the crucial role it plays in the emergence of the 
+	Despites the complexity of this phenomenon and the crucial role it plays in the emergence of the 
 	abilities of the brain once grown and it 
 	
 	
