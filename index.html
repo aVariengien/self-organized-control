@@ -39,7 +39,7 @@
 
 	<h2 class="margin-m"> Introduction </h2>
 		<p>
-			One of the most remarkable feat of life is the developmental process leading to the emergent complexity of the human brain from 
+			One of the most remarkable feats of life is the developmental process leading to the emergent complexity of the human brain from 
 			a single cell. The field of neurodevelopment (i.e., the development of the nervous system) has been investigating this problem for 
 			decades. These studies led to the discovery of the intricate mechanisms by which gradients of chemicals and local cell interactions
 			shape the differentiation of pre-neural cells and the organization of their connections. [<b> citation needed</b>]
@@ -66,7 +66,7 @@
 			There is an information gap between the size of the DNA and the complexity of the neural network, generally 
 			referred to as <i>genomic bottleneck</i> [<b>A critique of pure learning ..., Anthony M. Zador</b>]. 
 			The DNA, through the shape of the proteins it encodes, specifies the local behavior of cells. The neural 
-			network is then a structure that emerges through these local interactions and yield a useful biological 
+			network is then a structure that emerges through these local interactions and yields a useful biological 
 			processing of the inputs received by the senses. [<b>The Challenge Of Complexity, Wolfgang Banzhaf</b>]
 		</p>
 		
@@ -88,10 +88,10 @@
 		</p>
 
 		<p>
-			 In this work we attempt at bridging the gap between growth and computation by using neural cellular automaton (CA) 
+			 In this work, we attempt at bridging the gap between growth and computation by using neural cellular automaton (CA) 
 			 <b>[Growing NCA, https://core.ac.uk/download/pdf/147570059.pdf]</b>. This is a spatially distributed system composed of 
-			 cells that interact through local interaction. Their update rule consists in an artificial neural networks and thus 
-			 can be optimized through the classical and efficient gradient descent-based techniques. Even if the learning process 
+			 cells that interact through local interaction. Their update rule consists of an artificial neural network and thus 
+			 can be optimized through classical and efficient gradient descent-based techniques. Even if the learning process 
 			 is still happening through a procedure exterior to the system, the local rules encode both the developmental 
 			 process—the transformation from a random grid to a configuration suitable for computation—and the information processing itself. 
 			 We found that the cells were able to transmit and combine in a meaningful way the information from input cells to output cells 
@@ -113,7 +113,7 @@
 
 	<h2> Cell state </h2>
 		<p>
-			There are 3 types of cells in a grid: the normal cells, the input, and output cells.
+			There are 3 types of cells in a grid: the intermediate cells, the input, and output cells.
 		</p>
 		<p>
 			The state of each cell is composed of 6 channels. The first is the <i> information channel</i> where meaningful
@@ -123,10 +123,18 @@
 		<p>
 			The state of the input cell cannot be changed, the information channel is set to the value to input at this cell
 			and the other channel expects the output identifier is set to 1.
-			
 			The values of the information channel of the output cells are used as the output of the system to be optimized
 			to solve the task.
 		</p>
+		<p>
+			The meaning of each channel and the different type of cell are represented in the figure below.
+		</p>
+			<div>
+			<img src = "img/cell_states.png" width="700" class="center" >
+			</div>
+			<div class="caption">The role of the different channel and type of cells. Channel values that 
+				are fixed are represented in red and in black are channels values that can be modified by the update rule.
+				All the channels are used as input of the update rule.</div>
 
 		<h4> Input encoding </h4>
 			<p>
@@ -161,14 +169,14 @@
 		Our model can be abstracted as a black box function that takes inputs (that will be fed to the information channel of input cells)
 		and transform them in outputs (the information channel of output cells). This function is differentiable with respect to its
 		parameters (the neural network used as update rule) and thus they can be optimized with classical gradient descent techniques.
-		In this cased we used the Adam optimized provided by the TensorFlow library. 
+		In this case we used the Adam optimized provided by the TensorFlow library. 
 		
 		
 		</p>
 		<h4> Algorithm </h4>
 		<p>
-			To tackle the cart-pole problem, we used Deep Q-learning [<b>citation</b>] where the usual artificial neural network is seamlessly replace by the neural CA.
-			The deep Q-learning algorithm aim at learning an estimate of the expected reward given a state and an action.
+			To tackle the cart-pole problem, we used Deep Q-learning [<b>citation</b>] where the usual artificial neural network is seamlessly replaced by the neural CA.
+			The deep Q-learning algorithm aims at learning an estimate of the expected reward given a state and an action.
 			More precisely, the value to be learned at a given step is:
 			
 			<div><img src = "img/q_value.png" width="70%" class="center"  ></div>
@@ -186,11 +194,11 @@
 			<p>
 			The loss function for the task is the L2 loss between the output and the target.
 			To achieve long term stability and we added a penalty for 
-			cells that have channels value out of bound [-5,5].
+			cells that have channels value out of bound [-5,5]. Note that excepted this overflow condition,
+			the states of the intermediate cells are not directly optimized, they are free to evolve insofar as the outputs
+			are correct.
 			
-
 			<div><img src = "img/loss_formula.png" width="100%" class="center"  ></div>
-
 			<div class="caption">N is the size of the grid, &lambda; a parameter to control the amount of overflow penalty.</div>
 
 
@@ -198,17 +206,19 @@
 		<h4> Neural CA training </h4>
 			<p>
 				As introduced in [<b> Growing NCA </b>] we used pool sampling for the state of the neural CA during training.
-				We let the CA evolve for a random number from 50 to 60 steps between the update of the input values and the readout of
+				We let the CA evolves for a random number from 50 to 60 steps between the update of the input values and the readout of
 				the outputs.
 			</p>
 		
 		
 		<h4>Model initialization </h4>
 			<p>
-				We found that when trained directly the model was stuck in a local minimum where it outputted constant values, no matter
+				We found that when trained directly the model was trapped in a local minimum where it outputted constant values, no matter
 				the state of the inputs.
-				We think that this is due to the fact that the intermediate cells between inputs lead to a vanishing to the gradient as
-				in vanilla Recurrent Neural Networks.
+				We think that this is due to the fact that there needs to be iterated application of the update rule on each of the cells between the inputs and outputs
+				to transmit and modify the information.
+				This repeated use of a neural network makes the gradient vanish, as observed
+				in vanilla Recurrent Neural Networks.[<b> citation on the gradient vanishing problem </b>]
 			</p>
 			<p>
 				To solve this problem, we first optimize the neural CA for an easier task: 
@@ -217,15 +227,17 @@
 			</p>
 			<p>
 				This initialization enables the neural CA to learn to stabilize the state of the cells, make an information link 
-				from input to output, and an primitive combination of the input values at the output cells.
+				from input to output, and an primitive combination of the input values at the output cells. This procedure 
+				is similar to what is used in curriculum learning where an easy subset of the task is learned before tackling the whole problem.
+				Here we didn't used a sub-task as a starting point but a different task that shared common requirement.
 			</p>
 		<h4> Robustness </h4>
 			<h6> Damage </h6>
 			<p>
-				To learn to recover from damage, before each learning step the grid has 0.5 probability of receiving damage.
+				To learn to recover from damage, before each learning step the grid has a 0.5 probability of receiving damage.
 				
 				A damage consist in the states of the cells in a circle of the grid replaced by uniform random values in [-1,1], as shown
-				in black below. Note that a damage impact all channel that can be changed and that input are not affected by damage while outputs are.
+				in black below. Note that a damage impact all the channels that can be modified and that inputs are not affected by damage while outputs are.
 				<div><img src="img/damage.png" width="500" class="center" ></div>
 				<div class="caption">
 					A damage shown on the information channel. The shape of the damage is an irregular circle due to rasterization effect.
@@ -233,33 +245,33 @@
 			</p>
 			<h6> Noise </h6>
 			<p>
-				Before applying each update, we added a uniform noise. We thought that this would be useful to force a stabilization of the
-				states of the CA since it would learn to cope with perturbation at every step.
+				Before applying each update, we added a uniform noise. Following what was done in [<b> self classifying MNIST</b>], 
+				we used noisy update to force a long-term stabilization of the
+				states of the CA. <!-- since it would learn to cope with perturbation at every step.-->
 			</p>
 	<h2> Results </h2>
 	<p>
-	We ran the training procedure for around 200k gradient descent steps and several hundreds of environment simulation. Note
-	that the hyperparamters for the training were not optimized and we mainly aimed at solving the task, not learning efficiency.
+	We ran the training procedure for around 200k gradient descent steps and several hundreds of environment simulations. Note
+	that the hyperparameters for the training were not optimized and we mainly aimed at solving the task, not efficiency.
 	</p>
 	
 	<h4> From estimating Q-values to stable behavior </h4>
 	<p>
-		To get a constant control of the 
-		cartpole agent, we input the observation of the current state in the input cells. We let the 
+		To get a persistent control of the 
+		cartpole agent, we begin by transmitting the observation of the current state in the input cells. We let the 
 		neural CA evolve for a random number of steps between 50 and 60. We take the action
 		corresponding to the maximum output value and we input the new observation to the neural CA.
 		
-		The grid is initialized with uniform random values and the same grid is used during the whole
+		The grid is initialized with uniform random values and then same grid is used during the whole
 		simulation.
 	</p>
 	
 	<p>
 		Our model was able to solve the cartpole problem and achieve long-term stability of both
-		the pole balancing and of the state of the CA.
+		the pole balancing and of the states of the CA.
 		It was able to balance the pole for more than 10k simulation steps. A video of 9 independent
 		runs for 1000 simulation steps is shown below.
-		For these runs, the neural CA is not perpetuated by noise nor damage.
-	
+		
 		<div>
 		<video autoplay loop controls width="750" class="center">
 			<source src="videos/mosaics/mosaic_no_damage_no_noise_small.mp4"
@@ -268,7 +280,7 @@
 		</video>
 		</div>
 
-		<div class="caption">9 independent runs of the final model. </div>
+		<div class="caption">9 independent runs of 1000 steps of the final model. For these runs, the neural CA is not perturbed by noise nor damage. </div>
 	</p>
 	
 	<h4> Resulting neural CA </h4>
@@ -279,7 +291,7 @@
 		
 		
 		<div>
-		<video autoplay loop controls width="750" class="center">
+		<video controls width="750" class="center">
 			<source src="videos/grid_and_envi/no_noise_no_damage_small.mp4"
 					type="video/mp4" >
 			Sorry, your browser doesn't support embedded videos.
@@ -289,37 +301,40 @@
 			On the left, the states of the neural CA. 
 			For the information channel, negative values are in blue, positive in red. <br>
 			Bottom right: the plot of the output values of the neural CA. The vertical dotted lines note when 
-			the action that has the maximum expected reward is taken in the cartpole environment.
+			the action that has the maximum expected reward is taken in the cartpole environment.<br>
 			Green triangle: LEFT action, orange triangle: RIGHT action.
 		</div>
 		<p>
 			We observe that the first 50 steps lead to a precise spatial organization of the grid. 
-			Once stabilized, this shape will not change during the whole run. This can be thought
+			Once stabilized, this global shape will not change during the whole run. This can be thought
 			as the developmental part of the neural CA.
 		</p>
 		<p>
-			Then during the remaining part of the simulation, the activity are changing according to the evolution of 
-			the physical observation to be combined in the output cells. Note that the output values are always really
-			close one. This is due to the fact that the pole is in a balance state, this mean that the difference
+			Then during the remaining part of the simulation, the spatial activity is changing in phase with 
+			the physical observations. Note that the output values are always really
+			close one. Since the pole is in a balanced state, the difference
 			between the expected reward after going left or right is small. Going left then right or going right 
 			then left will not yield a great difference in reward. 
 		</p>
-	<h4> Robustness test </h4>
+	<h4> Robustness abilities </h4>
 	
 	<p>
-		During training, the neural CA has always at least 50 steps between the inputs update
-		and the readout of the output values. This let time to recover from damage. 
-		During testing we also experimented with a more challenging type of damage
-		we called <i>uniformly distributed damage</i> where at each CA steps there is a constant
-		probability of receiving a damage.
-		
-		On average, the CA receive one damage every 4 input updates with uniformly distributed damage
-		and every 2 input updates with the damage used during training.
+		During training, the neural CA has always at least 50 steps between the update of the inputs, where damage
+		can occur,
+		and the readout of the output values.
+		During testing, we also experimented with a more challenging type of damage
+		we called <i>uniformly distributed damage</i> where at each CA steps the grid has a constant
+		probability of being damaged.
 	</p>
 	<p>
-		The performance of the agent in different perturbation context is summarized in the table below.
+		Because this type of damage was more difficult to cope with, we decrease the damage frequency: 
+		on average, the CA receive one damage every 4 input updates with uniformly distributed damage
+		and one every 2 input updates with the damage used during training.
+	</p>
+	<p>
+		The performance of the neural CA with different perturbation is summarized in the table below.
 		The score denote the number of environment steps before the pole fall or the cart hit a wall.
-		The mean score on 100 independent runs as well as the standard deviation is shared.
+		In each situation, we computed the mean score on 100 independent runs as well as the standard deviation.
 	</p>
 	<table>
 	  <thead>
@@ -334,7 +349,7 @@
 		<tr>
 		  <th>No noisy update</th>
 		  <td> 6686.0 &pm; 3371</td>
-		  <td> TO DO</td>
+		  <td> 2598.19 &pm; 2241</td>
 		  <td> 391.6&pm; 283</td>
 		</tr>
 		<tr>
@@ -345,26 +360,201 @@
 		</tr>
 	  </tbody>
 	</table>
+	<div class="caption"> Performance of the cartpole agent with several types of perturbation. The scores is the number
+		of time step the pole stay balanced without hitting walls. The score are averaged on 100 runs and are 
+		noted <i>mean</i> &pm; <i>standard deviation</i>. </div>
 	
 	<h6> Resistance to damage </h6>
 	
+	<p>
+	We found that the neural CA was able to maintain its shape and its function despite
+	frequent damage. In the video above we can observe how the grid recover from damage.
+	Although damage can lead to great perturbations in the output values and so to
+	random actions, the agent is still able to stabilize the pole for several hundred steps.
+	</p>
+	<p>
+	Moreover, the neural CA was not trained to recover from uniformly distributed damage, this explains
+	the greater diminution in the average score shown in the table.
 	
-
+	<div>
+	<video controls width="750" class="center">
+		<source src="videos/grid_and_envi/no_noise_with_damage_small.mp4"
+				type="video/mp4" >
+		Sorry, your browser doesn't support embedded videos.
+	</video>
+	</div>
 	
-	
-	
-	
-	<!--
-	and enables great robustness such as rewiring some part
-	of 
-	
-	Despites the complexity of this phenomenon and the crucial role it plays in the emergence of the 
-	abilities of the brain once grown and it 
-	
+	<div class="caption">
+		A neural CA controls a cartpole agent for 500 steps and recovers from grid damages.
+		The frequency of damage is on average once every 18 cartpole steps except for the 
+		first steps where it's increased to be able to observe regeneration of the CA. 
+		Damages can be seen around the steps 90 and 110. <br>
+		We can observe important drops in the outputs after a damage during the
+		time the CA recover.
+	</div>
 	
 	</p>
+		Here is an overview of the behavior of the cartpole agent when it receive uniformly distributed damages.
+		We observe a great discrepancy of balancing abilities, as suggested by the important standard deviation
+		in the table above.
+		<div>
+		<video controls width="750" class="center">
+			<source src="videos/mosaics/mosaic_damageTrue_noiseFalse_small.mp4"
+					type="video/mp4" >
+			Sorry, your browser doesn't support embedded videos.
+		</video>
+		</div>
+		
+		<div class="caption">
+			9 independent run of 1000 steps with uniformly distributed damage (on average one damage every 4 cartepole steps).
+			When the pole becomes red, it means the simulation is over.
+		</div>
+	<p>
+		
+	</p>
 	
-	Here we argue that this 
+	<h6> Resistance to noise </h6>
+	
+	<p>
+	The amount of noise added to each update is often similar to the difference between the two outputs when the
+	pole is in a balanced state. This is why we observe in the video below the green and orange curves
+	subject to stochastic variations that lead them to cross many times between each readout. The policy 
+	that controls the cartpole agent is thus heavily randomized. Despite the noisy update, the neural CA can produce a probability distribution of actions such that a stable behavior emerges.
+	</p>
+	
+	<video controls width="750" class="center">
+		<source src="videos/grid_and_envi/noise_and_damage_small.mp4"
+				type="video/mp4" >
+		Sorry, your browser doesn't support embedded videos.
+	</video>
+	
+	<p>
+		Here is an overview of the cartpole agent abilities when the neural CA is subject to noisy updates.
+	</p>
+	
+	<div class="caption">
+		A neural CA controls a cartpole agent for 500 steps with noisy update.
+	</div>
+	
+	<p>
+		<div>
+		<video controls width="750" class="center">
+			<source src="videos/mosaics/mosaic_damageFalse_noiseTrue_small.mp4"
+					type="video/mp4" >
+			Sorry, your browser doesn't support embedded videos.
+		</video>
+		</div>
+		
+		<div class="caption">
+			9 independent runs of 1000 steps of the neural CA cartpole agent with noisy update. <br>
+		</div>
+	</p>
+	
+	
+	
+	<h6> Resistance to input deletion </h6>
+	<p>
+	One of the particularities of this neural CA model is its flexibility. For instance, the number of inputs and
+		outputs can vary without changing the architecture. We only have to replace input or output cells with intermediate ones.
+	</p>
+	<p>
+		We were interested in exploring this flexibility and whether our model showed robustness to input deletion.
+		Because observation from the cartpole environment are encoded redundantly, we tested if it was able 
+		to exploit this particularity even if it was not trained for this.
+	
+	</p>
+	<p>
+		In the video below, we can observe the consequences of deleting each input. Each column correspond to one observation type,
+		each row corresponds to the first or the second input cell encoding this observation being deleted.
+	</p>
+	
+	<div>
+		<video controls width="750" class="center">
+			<source src="videos/mosaics/mosaic_deleted_cells_with_text.mp4"
+					type="video/mp4" >
+			Sorry, your browser doesn't support embedded videos.
+		</video>
+	</div>
+	
+	<div class="caption">
+		Simulation of 500 cartpole steps with one input deleted, noisy update and uniformly distributed damage. 
+		Each column correspond to one observation type. Each row correspond to the first or the second input 
+		cell encoding this observation being deleted. <br>
+	</div>
+	
+	<p>
+		The mean scores on 50 independent runs
+		for each input deletion are summarized in the table below.
+	</p>
+	
+	<table>
+	  <thead>
+		<tr>
+		  <th>Input type deleted</th>
+		  <th>Cart position</th>
+		  <th>Cart velocity</th>
+		  <th>Pole angle</th>
+		  <th>Pole angular velocity</th>
+		</tr>
+	  </thead>
+	  <tbody>
+		<tr>
+		  <th> First input deleted </th>
+		  <td> 306.6 &pm; 205</td>
+		  <td> 255.4 &pm; 161</td>
+		  <td> 353.3&pm; 208</td>
+		  <td> 215.7&pm; 100</td>
+		</tr>
+		<tr>
+		  <th>Second input deleted</th>
+		  <td>330.7 &pm; 182</td>
+		  <td>138.7 &pm; 59</td>
+		  <td>28.3 &pm; 12</td>
+		  <td>48.4 &pm; 24</td>
+		</tr>
+	  </tbody>
+	</table>
+	
+	<div class="caption"> Mean and standard deviation of the score after each input deletion.
+						  The CA are perturbed with uniformly distributed damage (on average one every 4 cartpole steps) and noisy update </div>
+	
+	<p>
+		The system seems to be dependent on a few inputs that seriously impairs performances such as the second input encoding for pole angle and angular velocity, 
+		while others seem not to affect significantly its abilities. We hypothesize that even if it has not been directly trained to be robust to input deletion,
+		the robustness to damage and noise includes also adaptation to unseen perturbation.
+	</p>
+	
+	<h2> Discussion </h2>
+		<p>
+			In this work, we demonstrated that neural CA can be used as a differentiable black-box function
+			in the context of Deep-Q learning. We used it to solve the simple cartpole problem. A future challenge
+			would be to apply it in cases where the input and output dimensionality is much higher.
+		</p>
+		<p>
+			The computing abilities of the CA were maintained over several hundreds of 
+			thousand iterations, producing an emergent stable behavior in the environment it controls for thousands of steps. 
+			Moreover the system obtained demonstrated life-like phenomena such as a developmental phase, regeneration after damage,
+			stability despite a noisy environment and robustness to unseen disruption such as input deletion.
+			We can imagine that these abilities could be useful in a decentralized hardware where each cell is 
+			processed by an independent computing unit.
+		</p>
+		<p>
+			This is a step toward designing intelligent systems that incorporate 
+			self-organization abilities that are for now reserved to the living world.
+		</p>
+		
+	<h2> Additional experiments </h2>
+		In addition to the cartpole balancing problem, we explored other task and different variation of the neural CA model.
+		Here is a short list of the other tasks we tried that relates to problems solved in a decentralized way
+		by biological organisms.
+		
+		<ul>
+			<li> Exploring an environment to find an output cell </li>
+			<li> Following a gradient </li>
+			<li> Computing boolean functions </li>
+		</ul>
+	
+	<!--
 	
 	* Functional homeostasis
 	* Indirect encoding of the way to solve the task
