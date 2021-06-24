@@ -14,6 +14,8 @@ html {
   display: block;
   margin-left: auto;
   margin-right: auto;
+ 	margin-top: 0.75rem;
+
 }
 
 .txtcenter {
@@ -34,5 +36,6 @@ sup{
 	max-width: 50%;
 	 margin-left: auto;
 	margin-right: auto;
-	margin-top: 0.5rem;
+	margin-top: 0.75rem;
+	margin-bottom: 1.5rem;
 }
