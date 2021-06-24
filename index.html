@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Toward self organized control</title>
+    <title>Towards self organized control</title>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
 
 	<!-- CSS Reset -->
@@ -21,76 +21,82 @@
   <div class="column column-60 column-offset-20">
 
 
-	<h1> Toward self organized control </h1>
-	<h3 class="nobold"> Using neural cellular automaton to robustly control a cartpole </h3>
-	<h5 class="nobold"> Alexandre Variengien, Stefano Nichele, Tom Glover, Sidney Pontes-Filho</h5>
-	<!-- Feel free to add affiliation as you want -->
-	<video autoplay loop width="900" class="center">
+	<h1> Towards self organized control </h1>
+	<h3 class="nobold"> Using neural cellular automata to robustly control a cartpole agent</h3>
+	<h4 class="nobold"> Alexandre Variengien <sup>1,2,3</sup>, Stefano Nichele<sup>1,2,*</sup>, Tom Glover<sup>1</sup>, Sidney Pontes-Filho<sup>1</sup></h4>
+	<small class="nobold"><sup><small>1</small></sup> Department of Computer Science, Oslo Metropolitan University, Oslo (Norway)  <br>
+					   <sup><small>2</small></sup> Department of Holistic Systems, Simula Metropolitan Centre for Digital Engineering, Oslo (Norway) <br>
+					   <sup><small>3</small></sup> Department of Computer Science, École Normale Supérieure de Lyon, Lyon (France) <br>
+					   <sup><small>*</small></sup> Corresponding author: <a href="mailto:stenic@oslomet.no">stenic@oslomet.no</a>
+	</small>
+	
+	<video autoplay loop width="750" class="center">
 		<source src="videos/grid_and_envi/noise_no_damage_crop.mp4"
 				type="video/mp4" class="center" >
 		Sorry, your browser doesn't support embedded videos.
 	</video>
+	<div class="caption">A neural cellular automaton controling a cartpole agent.</div>
 
 	<h2 class="margin-m"> Introduction </h2>
 		<p>
-			One of the most incredible feat of life could be the development of the complexity of a human brain from a single cell.
-			The field of neurodevelopment has been working on this problem for decades. These studies lead to the discovery of intricate mechanisms where gradients of chemicals
-			and local cell interaction shaped
-			the differentiation of pre-neural cells and the organization of their connections. [<b> citation needed</b>]
+			One of the most remarkable feat of life is the developmental process leading to the emergent complexity of the human brain from 
+			a single cell. The field of neurodevelopment (i.e., the development of the nervous system) has been investigating this problem for 
+			decades. These studies led to the discovery of the intricate mechanisms by which gradients of chemicals and local cell interactions
+			shape the differentiation of pre-neural cells and the organization of their connections. [<b> citation needed</b>]
 		</p>
 		<p>
-			Even after the brain is considered fully grown, this process does not stop. New neurons are formed every second until
-			death, and the shape and the importance of their connections always change.[<b> citation needed</b>] This neural plasticity is led by 
-			the sensory inputs received by the individual and seems to be at the root of the emergence of intelligence. 
-			In addition to the ability to cope with a changing environment, this plasticity provides an incredible robustness. 
-			For instance, the processing of visual information can be deferred to the auditive cortex if the first is impaired. [<b> citation needed</b>]
+			Even after the brain is considered fully grown, its developmental process does not stop. New neurons are formed 
+			continuously until death, and the shape and the strength of their connections change.[<b> citation needed</b>] 
+			Such neural plasticity is influenced by the sensory inputs received by the individual and is considered to be 
+			at the root of the emergence of intelligence. In addition to the ability to cope with a changing environment, 
+			plasticity provides a remarkable robustness. For example, the processing of visual information can be deferred 
+			to the auditive cortex if the first is impaired. [<b> citation needed</b>]
 		</p>
 		<p>
-			The neural plasticity can be thought as part of the whole biological mechanism directed toward homeostasis of both
-			shape and function.
-			This conceptual proximity is also justified by biological evidence like the recent discovery of the role of electrical 
-			activity during morphogenesis. 
-			The same ion channels are used both for local communication between non neural cells during embryogenesis and 
-			in the neurons to carry action potentials. [<b> Mike Levin et al. on flatworms</b>]
-			More generally, it seems to exists
-			a continuum between the phenomena we usually call <i> growing</i>, <i> learning</i> and <i>computing</i>. 
-			Each of these abilities seems be a different aspect of the same underlying self-organizing system.
+			The neural plasticity can be considered as a part of the whole biological mechanism governing homeostasis of both 
+			shape and function. This conceptual proximity is also justified by biological evidence such as the recent discovery 
+			of the role of electrical activity during morphogenesis. In particular, the same ion channels are used both for local 
+			communication between non neural cells during embryogenesis and in the neurons to carry action potentials. [<b> Mike Levin et al. on flatworms</b>]
+			More generally, there seems to exists a continuum between the phenomena we usually call <i> growing</i>, 
+			<i> learning</i> and <i>computing</i>. 
+			Each of these abilities may be considered a different aspect of the same underlying self-organizing system.
 		</p>
 		<p>
-			Moreover, it seems that the DNA doesn't encode precise details of the neural network.
-			There is an information gap between the size of the DNA and the complexity of 
-			the neural network that has been previously called <i>genomic bottleneck</i> [<b>A critique of pure learning ..., Anthony M. Zador</b>]. 
-			The DNA, through the shape of the proteins it encodes, specifies the local behavior of cells. The neural network is then a structure 
-			that emerges through these local interactions and yield a useful biological processing of the inputs received by the senses. [<b>The Challenge Of Complexity, Wolfgang Banzhaf</b>]
-		</p>
-		
-		<p>
-			Despite the crucial role of growth in the emergence of intelligence, modern advances on artificial neural networks mainly 
-			focused on the handcrafted design of static map
-			neural connection. During the phase called <i>learning</i> - that is in fact quite far from the biological sense of this 
-			word [<b>A critique of pure learning ..., Anthony M. Zador</b>]- the connections of this architecture are optimized to 
-			reduce the error on the task to solve. 
+			Moreover, there is evidence that the DNA does not encode precise details of the resulting neural network. 
+			There is an information gap between the size of the DNA and the complexity of the neural network, generally 
+			referred to as <i>genomic bottleneck</i> [<b>A critique of pure learning ..., Anthony M. Zador</b>]. 
+			The DNA, through the shape of the proteins it encodes, specifies the local behavior of cells. The neural 
+			network is then a structure that emerges through these local interactions and yield a useful biological 
+			processing of the inputs received by the senses. [<b>The Challenge Of Complexity, Wolfgang Banzhaf</b>]
 		</p>
 		
 		<p>
-			Some effort has been made to include an automatic way to incrementally design neural network architectures. These techniques include
-			the use of genetic algorithms [<b>citation</b>], pruning of connection [<b>citation</b>] or with the introduction
-			of Growing Neural Networks. [<b>Growing Artificial Neural Networks, John Mixter and Ali Akoglu</b>]
-			Nonetheless, in these works the process is a tool of navigating the topological parameter space, rather then treating the learning as a developmental problem.
+			Despite the crucial role of growth in the emergence of intelligence, modern advances in artificial neural 
+			networks mainly focus on the handcrafted design of static map neural connections. During the phase 
+			called<i>learning</i>—that is in fact quite far from the biological sense of this 
+			word [<b>A critique of pure learning ..., Anthony M. Zador</b>]—the connections of this architecture are 
+			optimized to reduce the error on the task to solve.
+		</p>
+		
+		<p>
+			Some effort has been made to include an automatic process to incrementally design neural network architectures. 
+			These techniques include the use of genetic algorithms <b>[citation NEAT]</b>, pruning of connection 
+			<b>[citation https://medvet.inginf.units.it/publications/2021-c-nmpzn-effects/]</b> or with the introduction of Growing Neural Networks. 
+			<b>[https://direct.mit.edu/isal/proceedings/isal2020/32/473/98437, Growing Artificial Neural Networks, John Mixter and Ali Akoglu] </b>
+			Nonetheless, in these works the process is a tool of navigating the topological parameter space, rather then treating the learning 
+			as a developmental problem.
 		</p>
 
 		<p>
-			In this work we attempt at bridging the gap between growth and computation by using neural cellular automaton (CA) [<b>Growing NCA</b>].
-			This is a spatially distributed system composed of cells that interact through local interaction. Their update rule consists in 
-			an artificial neural networks and thus can be optimized through
-			the classical and efficient gradient descent-based techniques. 
-			Even if the learning process is still happening through a procedure exterior to the system, the local rules encodes both
-			the developmental process - the transformation from a random grid to a configuration suitable for computation- and the
-			information processing itself. 
-			We found that the cells were able to transmit and combine in a meaningful way the information from input cells to output cells 
-			used as a readout.
-			The system demonstrates long-term stability and robustness to noise and damage. 
-			We illustrate these abilities on a simple control task as a proof of concept.
+			 In this work we attempt at bridging the gap between growth and computation by using neural cellular automaton (CA) 
+			 <b>[Growing NCA, https://core.ac.uk/download/pdf/147570059.pdf]</b>. This is a spatially distributed system composed of 
+			 cells that interact through local interaction. Their update rule consists in an artificial neural networks and thus 
+			 can be optimized through the classical and efficient gradient descent-based techniques. Even if the learning process 
+			 is still happening through a procedure exterior to the system, the local rules encode both the developmental 
+			 process—the transformation from a random grid to a configuration suitable for computation—and the information processing itself. 
+			 We found that the cells were able to transmit and combine in a meaningful way the information from input cells to output cells 
+			 used as a readout. The system demonstrates long-term stability and robustness to noise and damage. We illustrate these 
+			 abilities on a simple control task as a proof of concept.
 		</p>
 		
 	<h2> The pole balancing task </h2>
@@ -134,15 +140,11 @@
 		<p>
 			The 8 inputs are arranged in an octagonal shape (dotted line) with the two outputs being offset by 2 cells from the center of the octagon.
 			We chose this configuration to ensure an equal distribution of the distance between each input information and output.
-		
-		
-		<div class="row">
-			<div class="column column-60 column-offset-20" class="txtcenter">
-				<img src = "img/io_position.png" width="70%" class="center" >
-				<br>
-				<small class="txtcenter">The position of input (in red) and output cells (in yellow).</small>
+			<div>
+			<img src = "img/io_position.png" width="300" class="center" >
 			</div>
-		</div>
+			<div class="caption">The position of input (in red) and output cells (in yellow).</div>
+			
 		</p>
 	
 	<h2> Model </h2>
@@ -166,13 +168,11 @@
 			To achieve long term stability and we added a penalty for 
 			cells that have channels value out of bound [-5,5].
 			
-			<div class="row">
-				<div class="column column-80 column-offset-10" >
-					<img src = "img/loss_formula.png" width="100%" class="center"  >
-					<br>
-					<small>N is the size of the grid, lambda a parameters to control the amount of overflow penalty.</small>
-				</div>
-			</div>
+
+			<div><img src = "img/loss_formula.png" width="100%" class="center"  ></div>
+
+			<div class="caption">N is the size of the grid, lambda a parameters to control the amount of overflow penalty.</div>
+
 
 			</p>
 		<h4>Model initialization </h4>
@@ -197,40 +197,33 @@
 				
 				A damage consist in the states of the cells in a circle of the grid replaced by uniform random values in [-1,1], as shown
 				in black below. Note that a damage impact all channel that can be changed and that input are not affected by damage while outputs are.
-				
-				
-				<div class="row">
-					<div class="column column-60 column-offset-20">
-						<img src="img/damage.png" width="70%" class="center" > <br>
-	
-						<small>A damage shown on the information channel. The shape of the damage is an irregular circle due to rasterization effect.</small>
-					</div>
+				<div><img src="img/damage.png" width="500" class="center" ></div>
+				<div class="caption">
+					A damage shown on the information channel. The shape of the damage is an irregular circle due to rasterization effect.
 				</div>
-
-				
 			</p>
 	<h2> Results </h2>
-	
-	Our model was able to solve the cartpole problem and achieve long-term stability of both
-	the pole balancing and of the state of the CA.
-	It was able to balance the pole for more than 10k simulation steps. A video of 9 independent
-	runs for 1000 simulation steps is shown below.
+	<p>
+	We ran the training procedure for around 200k gradient descent step and several hundreds of environment simulation. Note
+	that the hyperparamters for the training were not optimized and we mainly aimed at solving the task, not learning efficiency.
+	</p>
+	<p>
+		Our model was able to solve the cartpole problem and achieve long-term stability of both
+		the pole balancing and of the state of the CA.
+		It was able to balance the pole for more than 10k simulation steps. A video of 9 independent
+		runs for 1000 simulation steps is shown below.
+	</p>
 	<br>
 	
 
+	<video autoplay loop width="600" class="center">
+		<source src="videos/mosaics/mosaic_no_damage_no_noise_small.mp4"
+				type="video/mp4" width=100 class="center" >
+		Sorry, your browser doesn't support embedded videos.
+	</video>
+
+	<div class="caption">9 independent runs of the final model. </div>
 	
-	<div class="row">
-		<div class="column column-60 column-offset-20">
-			<video autoplay loop width="700" class="center">
-				<source src="videos/mosaics/mosaic_no_damage_no_noise_small.mp4"
-						type="video/mp4" width=100 class="center" >
-				Sorry, your browser doesn't support embedded videos.
-			</video>
-			<small>9 independent run of the final model.</small>
-		</div>
-	</div>
-	
-		
 	
 	
 	<!--

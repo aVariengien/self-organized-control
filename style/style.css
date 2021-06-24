@@ -23,3 +23,16 @@ html {
 .margin-m{
     margin-top: 4rem;
 }
+
+sup{
+	font-size:1.5rem
+}
+
+.caption {
+	font-size:small;
+	text-align: center;
+	max-width: 50%;
+	 margin-left: auto;
+	margin-right: auto;
+	margin-top: 0.5rem;
+}
