@@ -42,21 +42,32 @@
 			One of the most remarkable feats of life is the developmental process leading to the emergent complexity of the human brain from 
 			a single cell. The field of neurodevelopment (i.e., the development of the nervous system) has been investigating this problem for 
 			decades. These studies led to the discovery of the intricate mechanisms by which gradients of chemicals and local cell interactions
-			shape the differentiation of pre-neural cells and the organization of their connections. [<b> citation needed</b>]
+			shape the differentiation of pre-neural cells and the organization of their connections. 
+			<a class="ref" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2742095/" >[1]  
+			<span>Gradients in the Brain: The Control of the Development of Form 
+			and Function in the Cerebral Cortex, Stephen N. Sansom and Frederick J. Livesey
+			</span></a>
+			
+			
+			
 		</p>
 		<p>
 			Even after the brain is considered fully grown, its developmental process does not stop. New neurons are formed 
-			continuously until death, and the shape and the strength of their connections change.[<b> citation needed</b>] 
+			continuously until death, and the shape and the strength of their connections change.
 			Such neural plasticity is influenced by the sensory inputs received by the individual and is considered to be 
 			at the root of the emergence of intelligence. In addition to the ability to cope with a changing environment, 
-			plasticity provides a remarkable robustness. For example, the processing of visual information can be deferred 
-			to the auditive cortex if the first is impaired. [<b> citation needed</b>]
+			plasticity provides a remarkable robustness. For example, after a stroke, the neural network reorganize in a new
+			architecture to preserve motor function. 
+			<a class="ref" href="https://www.sciencedirect.com/science/article/pii/S0079612305500360" >[2]<span>Neural plasticity and recovery of function, Nick S.Ward</span></a>
+						
 		</p>
 		<p>
 			The neural plasticity can be considered as a part of the whole biological mechanism governing homeostasis of both 
 			shape and function. This conceptual proximity is also justified by biological evidence such as the recent discovery 
 			of the role of electrical activity during morphogenesis. In particular, the same ion channels are used both for local 
-			communication between non neural cells during embryogenesis and in the neurons to carry action potentials. [<b> Mike Levin et al. on flatworms</b>]
+			communication between non neural cells during embryogenesis and in the neurons to carry action potentials 			
+			<a class="ref" href="https://onlinelibrary.wiley.com/doi/epdf/10.1002/bem.10104" >[3]  <span>Bioelectromagnetics in morphogenesis, Michael Levin</span></a>.
+			
 			More generally, there seems to exists a continuum between the phenomena we usually call <i> growing</i>, 
 			<i> learning</i> and <i>computing</i>. 
 			Each of these abilities may be considered a different aspect of the same underlying self-organizing system.
@@ -64,32 +75,52 @@
 		<p>
 			Moreover, there is evidence that the DNA does not encode precise details of the resulting neural network. 
 			There is an information gap between the size of the DNA and the complexity of the neural network, generally 
-			referred to as <i>genomic bottleneck</i> [<b>A critique of pure learning ..., Anthony M. Zador</b>]. 
+			referred to as <i>genomic bottleneck</i> <a class="ref" href="https://www.nature.com/articles/s41467-019-11786-6" >[4]  <span>A critique of pure learning and what artificial neural networks can learn from animal brains, Anthony M. Zador</span></a>. 
 			The DNA, through the shape of the proteins it encodes, specifies the local behavior of cells. The neural 
 			network is then a structure that emerges through these local interactions and yields a useful biological 
-			processing of the inputs received by the senses. [<b>The Challenge Of Complexity, Wolfgang Banzhaf</b>]
+			processing of the inputs received by the senses
+			<a class="ref" href="https://link.springer.com/chapter/10.1007/1-4020-7782-3_11" >[5] <span>The Challenge Of Complexity, Wolfgang Banzhaf</span></a>.
 		</p>
 		
 		<p>
 			Despite the crucial role of growth in the emergence of intelligence, modern advances in artificial neural 
 			networks mainly focus on the handcrafted design of static map neural connections. During the phase 
 			called<i>learning</i>—that is in fact quite far from the biological sense of this 
-			word [<b>A critique of pure learning ..., Anthony M. Zador</b>]—the connections of this architecture are 
-			optimized to reduce the error on the task to solve.
+			word <a class="ref" href="https://www.nature.com/articles/s41467-019-11786-6" >[4]  
+					<span>A critique of pure learning and what artificial 
+					neural networks can learn from animal brains, Anthony M. Zador
+					</span></a>
+				—the connections of this architecture are optimized to reduce the error on the task to solve.
+			
 		</p>
 		
 		<p>
 			Some effort has been made to include an automatic process to incrementally design neural network architectures. 
-			These techniques include the use of genetic algorithms <b>[citation NEAT]</b>, pruning of connection 
-			<b>[citation https://medvet.inginf.units.it/publications/2021-c-nmpzn-effects/]</b> or with the introduction of Growing Neural Networks. 
-			<b>[https://direct.mit.edu/isal/proceedings/isal2020/32/473/98437, Growing Artificial Neural Networks, John Mixter and Ali Akoglu] </b>
+			These techniques include the use of genetic algorithms 
+					<a class="ref" href="https://ieeexplore.ieee.org/abstract/document/1004508" >[6] 
+						<span>Efficient evolution of neural network topologies, K.O. Stanley and R. Miikkulainen</span>
+					</a>
+			, pruning of connection 
+					<a class="ref" href="https://medvet.inginf.units.it/publications/2021-c-nmpzn-effects/" >[7] 
+						<span>On the Effects of Pruning on Evolved Neural Controllers for Soft Robots, Giorgia Nadizar et al.</span>
+					</a>
+			or with the introduction of a growing phase in artificial neural networks
+					<a class="ref" href="https://direct.mit.edu/isal/proceedings/isal2020/32/473/98437" >[8] 
+						<span>Evolving developmental neural networks to solve multiple problems, Julian Francis Miller</span>
+					</a>
+					<a class="ref" href="https://arxiv.org/abs/2006.06629" >[9] 
+						<span>Growing Artificial Neural Networks, John Mixter and Ali Akoglu</span>
+					</a>.
 			Nonetheless, in these works the process is a tool of navigating the topological parameter space, rather then treating the learning 
 			as a developmental problem.
 		</p>
 
 		<p>
 			 In this work, we attempt at bridging the gap between growth and computation by using neural cellular automaton (CA) 
-			 <b>[Growing NCA, https://core.ac.uk/download/pdf/147570059.pdf]</b>. This is a spatially distributed system composed of 
+					<a class="ref" href="https://distill.pub/2020/growing-ca/" >[10] 
+						<span>Growing Neural Cellular Automata, Alexander Mordvintsev et al.</span>
+					</a>.
+			 This is a spatially distributed system composed of 
 			 cells that interact through local interaction. Their update rule consists of an artificial neural network and thus 
 			 can be optimized through classical and efficient gradient descent-based techniques. Even if the learning process 
 			 is still happening through a procedure exterior to the system, the local rules encode both the developmental 
@@ -161,7 +192,10 @@
 	
 	<h2> Model </h2>
 		<p>
-			Except the design of the cell states, the neural CA architecture we used is similar to the one described here. [<b>Self-classifying MNIST Digits</b>]
+			Except the design of the cell states, the neural CA architecture we used is similar to the one described for the self-classifying MNIST task 
+					<a class="ref" href="https://distill.pub/2020/selforg/mnist/" >[11] 
+						<span>Self-classifying MNIST Digits, Ettore Randazzo et al.</span>
+					</a>.
 			The perception layer is composed of 20 learnable 3x3 filters, and the single hidden layers counts 30 units.
 			In total our model has 1854 learnable parameters. As in the original model, the update rule is stochastic: at each step each cell
 			has a 0.5 probability of being updated. This choice is made to avoid temporal synchronization that relies on a centralized clock.
@@ -175,7 +209,11 @@
 		</p>
 		<h4> Algorithm </h4>
 		<p>
-			To tackle the cart-pole problem, we used Deep Q-learning [<b>citation</b>] where the usual artificial neural network is seamlessly replaced by the neural CA.
+			To tackle the cart-pole problem, we used Deep Q-learning 
+					<a class="ref" href="https://arxiv.org/abs/1312.5602" >[12] 
+						<span>Playing Atari with Deep Reinforcement Learning, Volodymyr Mnih et al.</span>
+					</a>
+			where the usual artificial neural network is seamlessly replaced by the neural CA.
 			The deep Q-learning algorithm aims at approaching the expected reward given a state and an action.
 			More precisely, the function to be learned is given by:
 			
@@ -205,7 +243,10 @@
 			</p>
 		<h4> Neural CA training </h4>
 			<p>
-				As introduced in [<b> Growing NCA </b>] we used pool sampling for the states of the neural CA during training.
+				As introduced in <a class="ref" href="https://distill.pub/2020/growing-ca/" >[10] 
+									<span>Growing Neural Cellular Automata, Alexander Mordvintsev et al.</span>
+								</a> 
+					we used pool sampling for the states of the neural CA during training.
 				We let the CA evolves for a random number from 50 to 60 steps between the update of the input values and the readout of
 				the outputs.
 			</p>
@@ -218,7 +259,10 @@
 				We think that this is due to the fact that there needs to be iterated applications of the update rule on each of the cells between the inputs and outputs
 				to transmit and modify the information.
 				This repeated use of a neural network makes the gradient vanish, as observed
-				in vanilla Recurrent Neural Networks.[<b> citation on the gradient vanishing problem </b>]
+				in vanilla Recurrent Neural Networks
+								<a class="ref" href="https://www.worldscientific.com/doi/abs/10.1142/s0218488598000094" >[13] 
+									<span>The Vanishing Gradient Problem During Learning Recurrent Neural Nets and Problem Solutions, Sepp Hochreiter</span>
+								</a>.
 			</p>
 			<p>
 				To solve this problem, we first optimize the neural CA for an easier task: 
@@ -228,7 +272,11 @@
 			<p>
 				This initialization enables the neural CA to learn to stabilize the states of the cells, make an information link 
 				from input to output, and a primitive combination of the input values at the output cells. This procedure 
-				is similar to what is used in curriculum learning [<b>citation</b>] where an easy subset of the task is learned before tackling the whole problem.
+				is similar to what is used in curriculum learning <a class="ref" href="https://ronan.collobert.com/pub/matos/2009_curriculum_icml.pdf" >[14] 
+																		<span>Curriculum Learning, Yoshua Bengio et al.</span>
+																  </a>  
+								
+								where an easy subset of the task is learned before tackling the whole problem.
 				Here we didn't used a sub-task as a starting point but a different task that shared common requirements.
 			</p>
 		<h4> Robustness </h4>
@@ -246,7 +294,10 @@
 			</p>
 			<h6> Noise </h6>
 			<p>
-				Before applying each update, we added a uniform noise. Following what was done in [<b> self classifying MNIST</b>], 
+				Before applying each update, we added a uniform noise. Following what was done in 
+				<a class="ref" href="https://distill.pub/2020/selforg/mnist/" >[11] 
+					<span>Self-classifying MNIST Digits, Ettore Randazzo et al.</span>
+				</a>, 
 				we used noisy update to force a long-term stabilization of the
 				states of the CA. <!-- since it would learn to cope with perturbation at every step.-->
 			</p>

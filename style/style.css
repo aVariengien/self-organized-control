@@ -43,3 +43,34 @@ sup{
 p {
 	margin-top: 1rem;
 }
+
+a.ref {
+    text-decoration: none
+}
+
+a.ref:hover {
+    position: relative
+}
+
+
+a.ref span {
+    display: none
+}
+a.ref:hover span {
+    
+    padding: 5px 5px 5px 5px; 
+    display: block;
+    z-index: 100;
+    left: 0px;
+    margin: 10px;
+    width: 500px; 
+    position: absolute;
+    top: 10px;
+    text-decoration: none ;
+	font-size: small;
+	color: #000000;
+	background-color: #ffffff
+}
+
+
+
