@@ -22,11 +22,12 @@
 
 
 	<h1> Towards self organized control </h1>
-	<h3 class="nobold"> Using neural cellular automata to robustly control a cartpole agent</h3>
-	<h4 class="nobold"> Alexandre Variengien <sup>1,2,3</sup>, Stefano Nichele<sup>1,2,*</sup>, Tom Glover<sup>1</sup>, Sidney Pontes-Filho<sup>1</sup></h4>
+	<h3 class="nobold"> Using neural cellular automata to robustly control a cart-pole agent</h3>
+	<h4 class="nobold"> Alexandre Variengien <sup>1,2,3</sup>, Stefano Nichele<sup>1,2,*</sup>, Tom Glover<sup>1</sup>, Sidney Pontes-Filho<sup>1,4</sup></h4>
 	<small class="nobold"><sup><small>1</small></sup> Department of Computer Science, Oslo Metropolitan University, Oslo (Norway)  <br>
 					   <sup><small>2</small></sup> Department of Holistic Systems, Simula Metropolitan Centre for Digital Engineering, Oslo (Norway) <br>
 					   <sup><small>3</small></sup> Department of Computer Science, École Normale Supérieure de Lyon, Lyon (France) <br>
+					   <sup><small>4</small></sup> Department of Computer Science, Norwegian University of Science and Technology, Trondheim (Norway) <br>
 					   <sup><small>*</small></sup> Corresponding author: <a href="mailto:stenic@oslomet.no">stenic@oslomet.no</a>
 	</small>
 	
@@ -35,7 +36,7 @@
 				type="video/mp4" class="center" >
 		Sorry, your browser doesn't support embedded videos.
 	</video>
-	<div class="caption">A neural cellular automaton controling a cartpole agent.</div>
+	<div class="caption">A neural cellular automaton controling a cart-pole agent.</div>
 
 	<h2 class="margin-m"> Introduction </h2>
 		<p>
@@ -43,10 +44,8 @@
 			a single cell. The field of neurodevelopment (i.e., the development of the nervous system) has been investigating this problem for 
 			decades. These studies led to the discovery of the intricate mechanisms by which gradients of chemicals and local cell interactions
 			shape the differentiation of pre-neural cells and the organization of their connections 
-			<a class="ref" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2742095/" >[1]  
-			<span>Gradients in the Brain: The Control of the Development of Form 
-			and Function in the Cerebral Cortex, Stephen N. Sansom and Frederick J. Livesey
-			</span></a>.
+			<a class="ref" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2742095/" >[1]<span>
+			Gradients in the Brain: The Control of the Development of Form and Function in the Cerebral Cortex, Stephen N. Sansom and Frederick J. Livesey</span></a>.
 			
 			
 			
@@ -58,21 +57,22 @@
 			at the root of the emergence of intelligence. In addition to the ability to cope with a changing environment, 
 			plasticity provides a remarkable robustness. For example, after a stroke, the neural network reorganizes in a new
 			architecture to preserve motor function
-			<a class="ref" href="https://www.sciencedirect.com/science/article/pii/S0079612305500360" >[2]<span>Neural plasticity and recovery of function, Nick S.Ward</span></a>.
+			<a class="ref" href="https://www.sciencedirect.com/science/article/pii/S0079612305500360" >[2]<span>
+			Neural plasticity and recovery of function, Nick S.Ward</span></a>.
 			It can also adapt to sensory deprivation to extract the most information from the remaining senses. 
 			In blind individuals, the processing of auditive information can be partially deferred to the visual cortex, 
 			improving their sound localization abilities
-			<a class="ref" href="https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.0030027" >[15]
-			<span>A Functional Neuroimaging Study of Sound Localization: Visual Cortex 
+			<a class="ref" href="https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.0030027" >[15]<span>
+			A Functional Neuroimaging Study of Sound Localization: Visual Cortex 
 					Activity Predicts Performance in Early-Blind Individuals, 
-							Frédéric Gougoux et al. </span></a>.
+							Frédéric Gougoux et al.</span></a>.
 		</p>
 		<p>
 			The neural plasticity can be considered as a part of the whole biological mechanism governing homeostasis of both 
 			shape and function. This conceptual proximity is also justified by biological evidence such as the recent discovery 
 			of the role of electrical activity during morphogenesis. In particular, the same ion channels are used both for local 
-			communication between non neural cells during embryogenesis and in the neurons to carry action potentials 			
-			<a class="ref" href="https://onlinelibrary.wiley.com/doi/epdf/10.1002/bem.10104" >[3]  <span>Bioelectromagnetics in morphogenesis, Michael Levin</span></a>.
+			communication between non-neuronal cells during embryogenesis and in the neurons to carry action potentials 			
+			<a class="ref" href="https://onlinelibrary.wiley.com/doi/epdf/10.1002/bem.10104" >[3]<span>Bioelectromagnetics in morphogenesis, Michael Levin</span></a>.
 			
 			More generally, there seems to exists a continuum between the phenomena we usually call <i> growing</i>, 
 			<i> learning</i> and <i>computing</i>. 
@@ -81,11 +81,11 @@
 		<p>
 			Moreover, there is evidence that the DNA does not encode precise details of the resulting neural network. 
 			There is an information gap between the size of the DNA and the complexity of the neural network, generally 
-			referred to as <i>genomic bottleneck</i> <a class="ref" href="https://www.nature.com/articles/s41467-019-11786-6" >[4]  <span>A critique of pure learning and what artificial neural networks can learn from animal brains, Anthony M. Zador</span></a>. 
-			The DNA, through the shape of the proteins it encodes, specifies the local behavior of cells. The neural 
+			referred to as <i>genomic bottleneck</i> <a class="ref" href="https://www.nature.com/articles/s41467-019-11786-6" >[4]<span>A critique of pure learning and what artificial neural networks can learn from animal brains, Anthony M. Zador</span></a>. 
+			The DNA specifies the local behavior of cells through the shape of the proteins it encodes. The neural 
 			network is then a structure that emerges through these local interactions and yields a useful biological 
 			processing of the inputs received by the senses
-			<a class="ref" href="https://link.springer.com/chapter/10.1007/1-4020-7782-3_11" >[5] <span>The Challenge Of Complexity, Wolfgang Banzhaf</span></a>.
+			<a class="ref" href="https://link.springer.com/chapter/10.1007/1-4020-7782-3_11" >[5]<span>The Challenge Of Complexity, Wolfgang Banzhaf</span></a>.
 		</p>
 		
 		<p>
@@ -103,10 +103,8 @@
 		<p>
 			Some effort has been made to include an automatic process to incrementally design neural network architectures. 
 			These techniques include the use of genetic algorithms 
-					<a class="ref" href="https://ieeexplore.ieee.org/abstract/document/1004508" >[6] 
-						<span>Efficient evolution of neural network topologies, K.O. Stanley and R. Miikkulainen</span>
-					</a>
-			, pruning of connection 
+					<a class="ref" href="https://ieeexplore.ieee.org/abstract/document/1004508" >[6]<span>Efficient evolution of neural network topologies, K.O. Stanley and R. Miikkulainen</span></a>,
+					pruning of connection 
 					<a class="ref" href="https://medvet.inginf.units.it/publications/2021-c-nmpzn-effects/" >[7] 
 						<span>On the Effects of Pruning on Evolved Neural Controllers for Soft Robots, Giorgia Nadizar et al.</span>
 					</a>
@@ -114,29 +112,26 @@
 					<a class="ref" href="https://direct.mit.edu/isal/proceedings/isal2020/32/473/98437" >[8] 
 						<span>Evolving developmental neural networks to solve multiple problems, Julian Francis Miller</span>
 					</a>
-					<a class="ref" href="https://arxiv.org/abs/2006.06629" >[9] 
-						<span>Growing Artificial Neural Networks, John Mixter and Ali Akoglu</span>
-					</a>.
+					<a class="ref" href="https://arxiv.org/abs/2006.06629" >[9]<span>
+					Growing Artificial Neural Networks, John Mixter and Ali Akoglu</span></a>.
 			Nonetheless, in these works the process is a tool of navigating the topological parameter space, rather then treating the learning 
 			as a developmental problem. 
 		</p>
 		<p>
 			More radical approaches tried to develop an artificial substrate where life-like phenomena could emerge in an open-ended environment
-					<a class="ref" href="https://arxiv.org/abs/2101.07627" >[16] 
-						<span>Self-Organizing Intelligent Matter: A blueprint for an AI generating algorithm, Karol Gregor and Frederic Besse</span>
+					<a class="ref" href="https://arxiv.org/abs/2101.07627" >[16]<span>
+					Self-Organizing Intelligent Matter: A blueprint for an AI generating algorithm, Karol Gregor and Frederic Besse</span>
 					</a>
-					<a class="ref" href="https://arxiv.org/abs/2005.03742" >[17] 
-						<span>Lenia and Expanded Universe, Bert Wang-Chak Chan</span>
-					</a>.
+					<a class="ref" href="https://arxiv.org/abs/2005.03742" >[17]<span>
+					Lenia and Expanded Universe, Bert Wang-Chak Chan</span></a>.
 			Despite their great promise, we are still far from recreating the whole evolution process that give rise to intelligence.
 		</p>
 
 		<p>
 			 In this work, we attempt at bridging the gap between growth and computation by using neural cellular automaton (CA) 
-					<a class="ref" href="https://distill.pub/2020/growing-ca/" >[10] 
-						<span>Growing Neural Cellular Automata, Alexander Mordvintsev et al.</span>
-					</a>.
-			 This is a spatially distributed system composed of 
+					<a class="ref" href="https://distill.pub/2020/growing-ca/" >[10]<span>
+					Growing Neural Cellular Automata, Alexander Mordvintsev et al.</span></a>, while learning will be pursued in a future work.
+			 Neural CA is a spatially distributed system composed of 
 			 cells that interact through local interaction. Their update rule consists of an artificial neural network and thus 
 			 can be optimized through classical and efficient gradient descent-based techniques. Even if the learning process 
 			 is still happening through a procedure exterior to the system, the local rules encode both the developmental 
@@ -150,7 +145,7 @@
 		
 		<p>
 			The cart-pole problem is a commonly used toy problem in the reinforcement learning community. In this
-			environment, an agent controls a cartpole system. It can observe the pole angle and angular velocity, 
+			environment, an agent controls a cart-pole system. It can observe the pole angle and angular velocity, 
 			the cart position, and its linear velocity.
 			Based on these observations, it must decide whether to apply a force on the left or the right of the cart in order
 			to maximize the time spent with the pole up.
@@ -161,7 +156,7 @@
 			<div>
 			<img src = "img/cartepole_envi.png" width="400" class="center" >
 			</div>
-			<div class="caption">The cartepole environment. The top arrow represents the angular velocity of the pole,
+			<div class="caption">The cart-pole environment. The top arrow represents the angular velocity of the pole,
 								the bottom arrow, the velocity of the cart.
 				</div>
 			
@@ -217,9 +212,8 @@
 	<h2> Model </h2>
 		<p>
 			Except the design of the cell states, the neural CA architecture we used is similar to the one described for the self-classifying MNIST task 
-					<a class="ref" href="https://distill.pub/2020/selforg/mnist/" >[11] 
-						<span>Self-classifying MNIST Digits, Ettore Randazzo et al.</span>
-					</a>.
+					<a class="ref" href="https://distill.pub/2020/selforg/mnist/" >[11]<span>
+					Self-classifying MNIST Digits, Ettore Randazzo et al.</span></a>.
 			The perception layer is composed of 20 learnable 3x3 filters, and the single hidden layers counts 30 units.
 			In total our model has 1854 learnable parameters. 
 		</p>
@@ -230,7 +224,7 @@
 		</p>
 	<h2> Training procedure </h2>
 		<p>
-			Our model can be abstracted as a black box function that takes inputs (that will be fed to the information channel of input cells)
+			Our model can be abstracted as a black-box function that takes inputs (that will be fed to the information channel of input cells)
 			and transform them in outputs (the information channel of output cells). This function is differentiable with respect to its
 			parameters (the neural network used as update rule) and thus they can be optimized with classical gradient descent techniques.
 			In this case we used the Adam optimized provided by the TensorFlow library. 
@@ -246,20 +240,19 @@
 			More precisely, the function to be learned is given by:
 			
 			<div><img src = "img/q_value.png" width="70%" class="center"  ></div>
-			<div class="caption">s<sub>t</sub> is the current state and a<sub>t</sub> the action to evaluate. 
-				&gamma; is a discount factor. </div> <!-- We used &gamma;=0.95, a usual value for deep Q-learning. -->
+			<div class="caption">t is the index of the current time-step. s<sub>t</sub> is the current state and a<sub>t</sub> the action to evaluate. r<sub>t</sub> is the reward and &gamma; is a discount factor.</div> <!-- We used &gamma;=0.95, a usual value for deep Q-learning. -->
 			To keep the CA values in the information channel in a range coherent with the other cells, we scale the outputs of the CA by a factor
 			of 100 to get the Q-value estimates.
 		</p>
 		<h4> Environment </h4>
 		<p>
-			We used the cartpole environment provided by the <a href="https://gym.openai.com/">OpenAI gym library</a>.
+			We used the cart-pole environment provided by the <a href="https://gym.openai.com/">OpenAI gym library</a>.
 			<!-- comment on the custom reward function ? -->
 		</p>
 		<h4> Loss function </h4>
 			<p>
 			The loss function for the task is the L2 loss between the output and the target.
-			To achieve long term stability and we added a penalty for 
+			To achieve long term stability, we added a penalty for 
 			cells that have channels value out of bound [-5,5]. Note that excepted this overflow condition,
 			the states of the intermediate cells are not directly optimized, they are free to evolve insofar as their influence on the outputs
 			reduce the error.
@@ -275,7 +268,7 @@
 									<span>Growing Neural Cellular Automata, Alexander Mordvintsev et al.</span>
 								</a> 
 					we used pool sampling for the states of the neural CA during training.
-				We let the CA evolves for a random number from 50 to 60 steps between the update of the input values and the readout of
+				We let the CA evolves for a random number of steps from 50 to 60 between the update of the input values and the readout of
 				the outputs.
 			</p>
 		
@@ -288,9 +281,8 @@
 				to transmit and modify the information.
 				This repeated use of a neural network makes the gradient vanish, as observed
 				in vanilla Recurrent Neural Networks
-								<a class="ref" href="https://www.worldscientific.com/doi/abs/10.1142/s0218488598000094" >[13] 
-									<span>The Vanishing Gradient Problem During Learning Recurrent Neural Nets and Problem Solutions, Sepp Hochreiter</span>
-								</a>.
+								<a class="ref" href="https://www.worldscientific.com/doi/abs/10.1142/s0218488598000094" >[13]<span>
+								The Vanishing Gradient Problem During Learning Recurrent Neural Nets and Problem Solutions, Sepp Hochreiter</span></a>.
 			</p>
 			<p>
 				To solve this problem, we first optimize the neural CA for an easier task: 
@@ -323,9 +315,8 @@
 			<h6> Noise </h6>
 			<p>
 				Before applying each update, we added a uniform noise. Following what was done in 
-				<a class="ref" href="https://distill.pub/2020/selforg/mnist/" >[11] 
-					<span>Self-classifying MNIST Digits, Ettore Randazzo et al.</span>
-				</a>, 
+				<a class="ref" href="https://distill.pub/2020/selforg/mnist/" >[11]<span>
+				Self-classifying MNIST Digits, Ettore Randazzo et al.</span></a>, 
 				we used noisy update to force a long-term stabilization of the
 				states of the CA. <!-- since it would learn to cope with perturbation at every step.-->
 			</p>
@@ -338,7 +329,7 @@
 	<h4> From estimating Q-values to stable behavior </h4>
 	<p>
 		To get a persistent control of the 
-		cartpole agent, we begin by transmitting the observation of the current state in the input cells. We let the 
+		cart-pole agent, we begin by transmitting the observation of the current state in the input cells. We let the 
 		neural CA evolve for a random number of steps between 50 and 60. We take the action
 		corresponding to the maximum output value and we input the new observation to the neural CA.
 		
@@ -347,7 +338,7 @@
 	</p>
 	
 	<p>
-		Our model was able to solve the cartpole problem and achieve long-term stability of both
+		Our model was able to solve the cart-pole problem and achieve long-term stability of both
 		the pole balancing and of the states of the CA.
 		It was able to balance the pole for more than 10k simulation steps. A video of 9 independent
 		runs for 1000 simulation steps is shown below.
@@ -366,7 +357,7 @@
 	<h4> Resulting neural CA </h4>
 	<p>
 		Beyond performance, it is interesting to visualize the activities of the 
-		neural CA during the control of the cartpole agent. 
+		neural CA during the control of the cart-pole agent. 
 	</p>
 		
 		
@@ -381,7 +372,7 @@
 			On the left, the states of the neural CA. 
 			For the information channel, negative values are in blue, positive in red. <br>
 			Bottom right: the plot of the output values of the neural CA. The vertical dotted lines note when 
-			the action that has the maximum expected reward is taken by the cartpole agent.<br>
+			the action that has the maximum expected reward is taken by the cart-pole agent.<br>
 			Green triangle: LEFT action, orange triangle: RIGHT action.
 		</div>
 		<p>
@@ -443,8 +434,8 @@
 		</tr>
 	  </tbody>
 	</table>
-	<div class="caption"> Performance of the cartpole agent with several types of perturbation. The score is the number
-		of time steps the cartpole stay balanced without hitting walls. The scores are averaged on 100 runs and are 
+	<div class="caption"> Performance of the cart-pole agent with several types of perturbation. The score is the number
+		of time steps the cart-pole stay balanced without hitting walls. The scores are averaged on 100 runs and are 
 		noted <i>mean</i> &pm; <i>standard deviation</i>. </div>
 	
 	<h6> Resistance to damage </h6>
@@ -468,8 +459,8 @@
 	</div>
 	
 	<div class="caption">
-		A neural CA controls a cartpole agent for 500 steps and recovers from grid damages.
-		The frequency of damage is on average once every 18 cartpole steps, except for the 
+		A neural CA controls a cart-pole agent for 500 steps and recovers from grid damages.
+		The frequency of damage is on average once every 18 cart-pole steps, except for the 
 		first steps where it's increased to be able to observe the regeneration of the CA. 
 		Damages can be seen around the steps 90 and 110. <br>
 		We can observe important drops in the outputs after a damage during the
@@ -477,7 +468,7 @@
 	</div>
 	
 	</p>
-		Here is an overview of the behavior of the cartpole agent when subject to uniformly distributed damages.
+		Here is an overview of the behavior of the cart-pole agent when subject to uniformly distributed damages.
 		<div>
 		<video controls width="750" class="center">
 			<source src="videos/mosaics/mosaic_damageTrue_noiseFalse_small.mp4"
@@ -487,7 +478,7 @@
 		</div>
 		
 		<div class="caption">
-			9 independent run of 1000 steps with uniformly distributed damage (on average one damage every 4 cartepole steps).
+			9 independent run of 1000 steps with uniformly distributed damage (on average one damage every 4 cart-pole steps).
 			When the pole becomes red, it means the simulation is over.
 		</div>
 	<p>
@@ -500,7 +491,7 @@
 	The amount of noise added to each update is often of the same order as the difference between the two outputs when the
 	pole is in a balanced state. This is why we observe in the video below the green and orange curves
 	subject to stochastic variations that lead them to cross many times between each readout. The policy 
-	that controls the cartpole agent is thus heavily randomized. Despite the noisy update, the neural CA can produce a probability distribution of actions such that a stable behavior emerges.
+	that controls the cart-pole agent is thus heavily randomized. Despite the noisy update, the neural CA can produce a probability distribution of actions such that a stable behavior emerges.
 	</p>
 	
 	<video controls width="750" class="center">
@@ -509,10 +500,10 @@
 		Sorry, your browser doesn't support embedded videos.
 	</video>
 	<div class="caption">
-		A neural CA controls a cartpole agent for 500 steps with noisy update.
+		A neural CA controls a cart-pole agent for 500 steps with noisy update.
 	</div>
 	<p>
-		Here is an overview of the cartpole agent abilities when the neural CA is subject to noisy updates.
+		Here is an overview of the cart-pole agent abilities when the neural CA is subject to noisy updates.
 	</p>
 	
 
@@ -527,7 +518,7 @@
 		</div>
 		
 		<div class="caption">
-			9 independent runs of 1000 steps of the neural CA cartpole agent with noisy update. <br>
+			9 independent runs of 1000 steps of the neural CA cart-pole agent with noisy update. <br>
 		</div>
 	</p>
 	
@@ -540,7 +531,7 @@
 	</p>
 	<p>
 		We were interested in exploring this flexibility and whether our model showed robustness to input deletion.
-		Because observation from the cartpole environment are encoded redundantly, we tested if it was able 
+		Because observation from the cart-pole environment are encoded redundantly, we tested if it was able 
 		to exploit this particularity even if it was not trained for this.
 	
 	</p>
@@ -558,7 +549,7 @@
 	</div>
 	
 	<div class="caption">
-		Simulation of 1000 cartpole steps with one input deleted. We also added noise and damage after update. 
+		Simulation of 1000 cart-pole steps with one input deleted. We also added noise and damage after update. 
 		Each column correspond to one observation type. Each row correspond to the first or the second input 
 		cell encoding this observation being deleted. <br>
 	</div>
@@ -598,7 +589,7 @@
 	</table>
 
 	<div class="caption"> Mean score and standard deviation of 25 independent runs after each input deletion.
-						  The CAs were perturbed with damage after update (on average one every 2 cartpole steps) and noisy update. </div>
+						  The CAs were perturbed with damage after update (on average one every 2 cart-pole steps) and noisy update. </div>
 	
 	<p>
 		The system seems to be dependent on a few inputs that seriously impairs performances such as the inputs encoding for pole angle and angular velocity, 
@@ -622,14 +613,14 @@
 	</div>
 	
 	<div class="caption">
-		The neural CA and the cartpole environment it controls. The input cells corresponding to the cart position
+		The neural CA and the cart-pole environment it controls. The input cells corresponding to the cart position
 		have been deleted and replaced by intermediate cells. No noise nor damage were added. <br>
 	</div>
 	
 	<h2> Discussion </h2>
 		<p>
 			In this work, we demonstrated that neural CA can be used as a differentiable black-box function
-			in the context of Deep-Q learning. We used it to solve the simple cartpole problem. A future challenge
+			in the context of Deep-Q learning. We used it to solve the simple cart-pole problem. A future challenge
 			would be to apply it in cases where the input and output dimensionality is much higher.
 		</p>
 		<p>
@@ -646,7 +637,7 @@
 		</p>
 		
 	<h2> Additional experiments </h2>
-		In addition to the cartpole balancing problem, we explored other tasks and different variation of the neural CA model.
+		In addition to the cart-pole balancing problem, we explored other tasks and different variation of the neural CA model.
 		Here is a short list of the other tasks we tried that relates to problems solved in a decentralized way
 		by biological organisms.
 		
