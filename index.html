@@ -21,7 +21,7 @@
   <div class="column column-60 column-offset-20">
 
 
-	<h1> Towards self organized control </h1>
+	<h1> Towards self-organized control </h1>
 	<h3 class="nobold"> Using neural cellular automata to robustly control a cart-pole agent</h3>
 	<h4 class="nobold"> Alexandre Variengien <sup>1,2,3</sup>, Stefano Nichele<sup>1,2,*</sup>, Tom Glover<sup>1</sup>, Sidney Pontes-Filho<sup>1,4</sup></h4>
 	<small class="nobold"><sup><small>1</small></sup> Department of Computer Science, Oslo Metropolitan University, Oslo (Norway)  <br>
@@ -69,7 +69,7 @@
 		</p>
 		<p>
 			The neural plasticity can be considered as a part of the whole biological mechanism governing homeostasis of both 
-			shape and function. This conceptual proximity is also justified by biological evidence such as the recent discovery 
+			shape and function. This conceptual proximity is also justified by biological evidence such as the discovery 
 			of the role of electrical activity during morphogenesis. In particular, the same ion channels are used both for local 
 			communication between non-neuronal cells during embryogenesis and in the neurons to carry action potentials 			
 			<a class="ref" href="https://onlinelibrary.wiley.com/doi/epdf/10.1002/bem.10104" >[3]<span>Bioelectromagnetics in morphogenesis, Michael Levin</span></a>.
@@ -118,7 +118,7 @@
 			as a developmental problem. 
 		</p>
 		<p>
-			The developmental problem has also been addressed as an independent task. The goal here is to model the phenomena of morphogenesis observed in living organisms.
+			The developmental problem has also been addressed as an independent task. In this case, the goal is to model the phenomena of morphogenesis observed in living organisms.
 			Successful approaches used cellular automata along with artificial neural networks implementing local rules. They were able to produce complex
 			patterns from localized interactions. 
 					<a class="ref" href="https://core.ac.uk/download/pdf/147570059.pdf" >[18] 
@@ -154,11 +154,11 @@
 		</p>
 		
 	<h2> The pole balancing task </h2>
-		
+
 		<p>
 			The cart-pole problem is a commonly used toy problem in the reinforcement learning community. In this
 			environment, an agent controls a cart-pole system. It can observe the pole angle and angular velocity, 
-			the cart position, and its linear velocity.
+			the cart position, and its linear velocity. 
 			Based on these observations, it must decide whether to apply a force on the left or the right of the cart in order
 			to maximize the time spent with the pole up.
 			
@@ -170,8 +170,15 @@
 			</div>
 			<div class="caption">The cart-pole environment. The top arrow represents the angular velocity of the pole,
 								the bottom arrow, the velocity of the cart.
-				</div>
-			
+			</div>
+			We used the implementation of this environment provided by the <a href="https://gym.openai.com/">OpenAI gym library</a>.
+			We used a custom reward function to favor agents that stay on the center of the track.
+			<div>
+			<img src = "img/reward.png" width="150" class="center" >
+			</div>
+			<div class="caption">The reward given at time step t. x is the position of the cart, L the length of the pole. On the center (x=0), the
+								agent receives the maximum reward of 1, while if it is on the edges of the track (x= &pm; L), the agent receives 0, the minimum reward. 
+			</div>
 		</p>
 
 	<h2> Cell state </h2>
@@ -181,7 +188,7 @@
 		<p>
 			The state of each cell is composed of 6 channels. The first is the <i> information channel</i> where meaningful
 			input and output information transit. The third is identifying the inputs: it is equal to 1 in the input cells, 0 elsewhere.
-			The fourth is similar for the outputs. The remaining three are hidden channels.
+			The fourth similarly identifies the outputs. The remaining three are hidden channels.
 		</p>
 		<p>
 			The state of the input cell cannot be changed, the information channel transmit the observation from the environment
@@ -201,7 +208,7 @@
 
 		<h4> Input encoding </h4>
 			<p>
-				For this task, we use redundancy in the inputs: each of the 4 physical observations of the environment is linked to 2 input cells.
+				We use redundancy in the inputs: each of the 4 physical observations of the environment is linked to 2 input cells.
 				We thought it could improve the opportunity for information combination and robustness. 
 				Note that the type of information contained in the input is not directly provided. To know which observation 
 				each input cell encodes, the CA must rely on the spatial position of the inputs or on the value of the information channel.
@@ -212,8 +219,8 @@
 			</p>
 		<h4> Cell position </h4>
 		<p>
-			The 8 inputs are arranged in an octagonal shape (dotted line) on a 32x32 grid. The two output cells are offset by 2 cells from the center of the octagon.
-			We chose this configuration to ensure an almost equal distribution of the distance between each input and output. 
+			The 8 inputs are arranged in an octagonal shape (dotted line) on a 32x32 grid with zeros at the boundary. The two output cells are offset by 2 cells from the center of the octagon.
+			We chose this configuration to ensure an almost equal distribution of the distance between each input and output.
 			<div>
 			<img src = "img/io_position.png" width="300" class="center" >
 			</div>
@@ -256,11 +263,7 @@
 			To keep the CA values in the information channel in a range coherent with the other cells, we scale the outputs of the CA by a factor
 			of 100 to get the Q-value estimates.
 		</p>
-		<h4> Environment </h4>
-		<p>
-			We used the cart-pole environment provided by the <a href="https://gym.openai.com/">OpenAI gym library</a>.
-			<!-- comment on the custom reward function ? -->
-		</p>
+
 		<h4> Loss function </h4>
 			<p>
 			The loss function for the task is the L2 loss between the output and the target.
@@ -297,7 +300,7 @@
 								The Vanishing Gradient Problem During Learning Recurrent Neural Nets and Problem Solutions, Sepp Hochreiter</span></a>.
 			</p>
 			<p>
-				To solve this problem, we first optimize the neural CA for an easier task: 
+				To solve this problem, we first trained the neural CA on an easier task: 
 				both outputs were optimized to compute the mean of the inputs. 
 				We found that it was able to learn with a reasonably low error after several thousand training steps.
 			</p>
