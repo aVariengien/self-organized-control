@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Towards self organized control</title>
+    <title>Towards self-organized control</title>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
 
 	<!-- CSS Reset -->
@@ -38,6 +38,10 @@
 				type="video/mp4" class="center" >
 		Sorry, your browser doesn't support embedded videos.
 	</video>
+	<script>
+		document.getElementById('vid').play();
+	</script>
+
 	<div class="caption">A neural cellular automaton controling a cart-pole agent.</div>
 
 	<h2 class="margin-m"> Introduction </h2>
@@ -142,7 +146,7 @@
 		<p>
 			 In this work, we attempt at bridging the gap between growth and computation by using neural cellular automaton (CA) 
 					<a class="ref" href="https://distill.pub/2020/growing-ca/" >[10]<span>
-					Growing Neural Cellular Automata, Alexander Mordvintsev et al.</span></a>, while learning will be pursued in a future work.
+					Growing Neural Cellular Automata, Alexander Mordvintsev et al.</span></a>.
 			 Neural CA is a spatially distributed system composed of 
 			 cells that interact through local interaction. Their update rule consists of an artificial neural network and thus 
 			 can be optimized through classical and efficient gradient descent-based techniques. Even if the learning process 
@@ -160,7 +164,8 @@
 			environment, an agent controls a cart-pole system. It can observe the pole angle and angular velocity, 
 			the cart position, and its linear velocity. 
 			Based on these observations, it must decide whether to apply a force on the left or the right of the cart in order
-			to maximize the time spent with the pole up.
+			to maximize reward, i.e. the time spent with the pole up and the cart in the center. 
+			The simulation ends if the cart hit a wall or if the pole fall.
 			
 			We chose this problem because of its low number of inputs and outputs that enables us to
 			use a small-sized grid and an easy experimentation environment.
@@ -172,12 +177,12 @@
 								the bottom arrow, the velocity of the cart.
 			</div>
 			We used the implementation of this environment provided by the <a href="https://gym.openai.com/">OpenAI gym library</a>.
-			We used a custom reward function to favor agents that stay on the center of the track.
+			We used a custom reward function to favor agents that stay on the center.
 			<div>
 			<img src = "img/reward.png" width="150" class="center" >
 			</div>
 			<div class="caption">The reward given at time step t. x is the position of the cart, L the length of the pole. On the center (x=0), the
-								agent receives the maximum reward of 1, while if it is on the edges of the track (x= &pm; L), the agent receives 0, the minimum reward. 
+								agent receives 1, the maximum reward, while if it is on the edges of the track (x= &pm; L), the agent receives 0, the minimum reward. 
 			</div>
 		</p>
 
