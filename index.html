@@ -29,6 +29,8 @@
 					   <sup><small>3</small></sup> Department of Computer Science, École Normale Supérieure de Lyon, Lyon (France) <br>
 					   <sup><small>*</small></sup> Corresponding author: <a href="mailto:stenic@oslomet.no">stenic@oslomet.no</a>
 	</small>
+
+	<h5 class="margin-m" style="color:#F00000";> June 28, 2021 - this draft paper is a preprint work-in-progress, an extended and updated version will be available shortly together with the code. </h5>
 	
 	<video autoplay loop width="750" class="center">
 		<source src="videos/grid_and_envi/noise_no_damage_crop.mp4"
@@ -47,8 +49,6 @@
 			<span>Gradients in the Brain: The Control of the Development of Form 
 			and Function in the Cerebral Cortex, Stephen N. Sansom and Frederick J. Livesey
 			</span></a>.
-			
-			
 			
 		</p>
 		<p>
@@ -121,6 +121,18 @@
 			as a developmental problem. 
 		</p>
 		<p>
+			The developmental problem has also been addressed as an independent task. The goal here is to model the phenomena of morphogenesis observed in living organisms.
+			Successful approaches used cellular automata along with artificial neural networks implementing local rules. They were able to produce complex
+			patterns from localized interactions. 
+					<a class="ref" href="https://core.ac.uk/download/pdf/147570059.pdf" >[18] 
+						<span>CA-NEAT: Evolved Compositional Pattern Producing Networksfor Cellular Automata Morphogenesis and Replication, Stefano Nichele et al.</span>
+					</a>
+					<a class="ref" href="https://distill.pub/2020/growing-ca/" >[10] 
+						<span>Growing Neural Cellular Automata, Alexander Mordvintsev et al.</span>
+					</a>.
+		</p>
+		
+		<p>
 			More radical approaches tried to develop an artificial substrate where life-like phenomena could emerge in an open-ended environment
 					<a class="ref" href="https://arxiv.org/abs/2101.07627" >[16] 
 						<span>Self-Organizing Intelligent Matter: A blueprint for an AI generating algorithm, Karol Gregor and Frederic Besse</span>
@@ -161,7 +173,7 @@
 			<div>
 			<img src = "img/cartepole_envi.png" width="400" class="center" >
 			</div>
-			<div class="caption">The cartepole environment. The top arrow represents the angular velocity of the pole,
+			<div class="caption">The cart-pole environment. The top arrow represents the angular velocity of the pole,
 								the bottom arrow, the velocity of the cart.
 				</div>
 			
@@ -205,8 +217,8 @@
 			</p>
 		<h4> Cell position </h4>
 		<p>
-			The 8 inputs are arranged in an octagonal shape (dotted line) with the two outputs being offset by 2 cells from the center of the octagon.
-			We chose this configuration to ensure an almost equal distribution of the distance between each input and output.
+			The 8 inputs are arranged in an octagonal shape (dotted line) on a 32x32 grid. The two output cells are offset by 2 cells from the center of the octagon.
+			We chose this configuration to ensure an almost equal distribution of the distance between each input and output. 
 			<div>
 			<img src = "img/io_position.png" width="300" class="center" >
 			</div>
@@ -305,7 +317,7 @@
 																  </a>  
 								
 								where an easy subset of the task is learned before tackling the whole problem.
-				Here we didn't used a sub-task as a starting point but a different task that shared common requirements.
+				Here we did not used a sub-task as a starting point but a different task that shared common requirements.
 			</p>
 		<h4> Robustness </h4>
 			<h6> Damage </h6>
@@ -487,7 +499,7 @@
 		</div>
 		
 		<div class="caption">
-			9 independent run of 1000 steps with uniformly distributed damage (on average one damage every 4 cartepole steps).
+			9 independent run of 1000 steps with uniformly distributed damage (on average one damage every 4 cart-pole steps).
 			When the pole becomes red, it means the simulation is over.
 		</div>
 	<p>
@@ -609,7 +621,7 @@
 	<p>
 		It seems that the inputs corresponding to the cart position do not affect by much the balancing abilities. So
 		we experimented how the system will react to sensory deprivation by removing these two input cells such that the system has no longer access to this observation. 
-		It is still able to maintain the pole balance for several thousands of steps (score of 2838.3 &pm; 1267 on 25 runs without noise and damage). 
+		It is still able to maintain the pole balance for several thousands of steps (score of 3926.7 &pm; 2383 on 25 runs without noise and damage). 
 		The reconfiguration of the grid can be observed in the video below.
 	</p>
 	
@@ -655,7 +667,34 @@
 			<li> Following a gradient </li>
 			<li> Computing boolean functions </li>
 		</ul>
-	
+		
+	<h2> References </h2>
+		
+		<b>[1] </b> "Gradients in the Brain: The Control of the Development of Form 
+					and Function in the Cerebral Cortex", Stephen N. Sansom and Frederick J. Livesey
+					<br>
+		<b>[2] </b> "Neural plasticity and recovery of function", Nick S.Ward<br>
+
+		<b>[3] </b> "Bioelectromagnetics in morphogenesis", Michael Levin<br>
+		<b>[4] </b> "A critique of pure learning and what artificial neural networks can learn from animal brains", Anthony M. Zador<br>
+		<b>[5] </b> "The Challenge Of Complexity", Wolfgang Banzhaf<br>
+		<b>[6] </b> "Efficient evolution of neural network topologies", K.O. Stanley and R. Miikkulainen<br>
+		<b>[7] </b> "On the Effects of Pruning on Evolved Neural Controllers for Soft Robots", Giorgia Nadizar et al.<br>
+		<b>[8] </b> "Evolving developmental neural networks to solve multiple problems", Julian Francis Miller<br>
+		<b>[9] </b> "Growing Artificial Neural Networks", John Mixter and Ali Akoglu<br>
+
+		<b>[10]</b> "Growing Neural Cellular Automata", Alexander Mordvintsev et al.<br>
+
+		<b>[11]</b> "Self-classifying MNIST Digits", Ettore Randazzo et al.<br>
+		<b>[12]</b> "Playing Atari with Deep Reinforcement Learning", Volodymyr Mnih et al.<br>
+		<b>[13]</b> "The Vanishing Gradient Problem During Learning Recurrent Neural Nets and Problem Solutions", Sepp Hochreiter<br>
+		<b>[14]</b> "Curriculum Learning", Yoshua Bengio et al.<br>
+		<b>[15]</b> "A Functional Neuroimaging Study of Sound Localization: Visual Cortex 
+							Activity Predicts Performance in Early-Blind Individuals", 
+									Frédéric Gougoux et al. <br>
+		<b>[16]</b> "Self-Organizing Intelligent Matter: A blueprint for an AI generating algorithm", Karol Gregor and Frederic Besse<br>
+		<b>[17]</b> "Lenia and Expanded Universe", Bert Wang-Chak Chan<br>
+		<b>[18]</b> "CA-NEAT: Evolved Compositional Pattern Producing Networksfor Cellular Automata Morphogenesis and Replication", Stefano Nichele et al.<br>
 	<!--
 	
 	* Functional homeostasis
