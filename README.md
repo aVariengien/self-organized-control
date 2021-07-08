@@ -1,1 +1,15 @@
-# self-organized-control
+# Towards self-organized control
+We used neural cellular automata to robustly control a 
+cart-pole agent.
+
+This repository host the article [*Towards self-organized control*](https://avariengien.github.io/self-organized-control/)
+as well as the code and a [Google Colab notebook](https://colab.research.google.com/github/aVariengien/self-organized-control/blob/main/code/Towards-self-organized-control-notebook.ipynb) 
+to easily  reproduce the results and experiment
+with the pretrained models.
+
+### Structure
+
+In the `code` folder:
+ * The `SelfOrgControl` package that host the class and the function to build and run the neural CA.
+ * The `AdditionalExperiments` contains code and videos about other experiment with neural CA. Each experiment has its own `README.md` file.
+ * The notebook `Towards-self-organized-control-notebook.ipynb`
