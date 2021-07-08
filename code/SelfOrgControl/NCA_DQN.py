@@ -328,8 +328,4 @@ class DQNAgent:
             return np.mean(S),np.std(S), np.mean(mean_it), np.std(mean_it)
 
 
-if __name__ == "__main__":
-
-    agent = DQNAgent(auto_reset=False)
-    agent.run()
 
