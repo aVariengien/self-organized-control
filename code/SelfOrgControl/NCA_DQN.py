@@ -287,7 +287,7 @@ class DQNAgent:
                 if render:
                     self.env.render()
                 if render_for_colab:
-                    screen = env.render(mode='rgb_array')
+                    screen = self.env.render(mode='rgb_array')
                     plt.imshow(screen)
                     plt.axis("off")
                     ipythondisplay.clear_output(wait=True)
