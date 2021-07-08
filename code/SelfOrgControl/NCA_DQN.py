@@ -7,6 +7,7 @@ import numpy as np
 import tensorflow as tf
 from collections import deque
 from SelfOrgControl.NeuralCA import *
+from IPython import display as ipythondisplay
 
 # The original structure of the code was taken from
 #  https://github.com/pythonlessons/Reinforcement_Learning/tree/master/01_CartPole-reinforcement-learning
