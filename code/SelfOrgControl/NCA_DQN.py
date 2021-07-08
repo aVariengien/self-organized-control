@@ -251,7 +251,8 @@ class DQNAgent:
 
     def test(self, render=True, nb_episode=1, fix_nb_step=-1,
                 random_action_proba=False, verbose=1,
-                conti_damage_proba=None, return_sensors=False):
+                conti_damage_proba=None, return_sensors=False,
+                render_for_colab=False):
         """Test the agent for nb_episodes runs. Returns the mean and standard
             deviation of the lengths of the episodes and the score.
             verbose -- 0: no information printed
@@ -285,6 +286,12 @@ class DQNAgent:
                   (i<fix_nb_step and fix_nb_step !=-1)):
                 if render:
                     self.env.render()
+                if render_for_colab:
+                    screen = env.render(mode='rgb_array')
+                    plt.imshow(screen)
+                    plt.axis("off")
+                    ipythondisplay.clear_output(wait=True)
+                    ipythondisplay.display(plt.gcf())
 
                 if conti_damage_proba is not None:
                     pred, _ = self.model.predict(state*self.in_factors,

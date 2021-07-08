@@ -153,16 +153,16 @@ def add_io_legend(axe):
                     ha=HOR_AL[(x,y)],va=VERT_AL[(x,y)])
 
 
-VIDEO_SPEEDS = { (0,50): -6,
-                (50,75):-2,
-                (75,90):1,
-                (90,150):2,
-                (150,200):2,
-                (200,220):2,
-                (220,240):3,
-                (240,280):4,
-                (280,330):5,
-                (330,4000):15,
+VIDEO_SPEEDS = { (0,50): 1,
+                (50,75):1,
+                (75,90):2,
+                (90,150):5,
+                (150,200):20,
+                (200,220):20,
+                (220,240):20,
+                (240,280):20,
+                (280,330):50,
+                (330,4000):50,
                 (4000, 40000):50}
 
 # VIDEO_SPEEDS = { (0,50): -2,
@@ -275,6 +275,11 @@ def visualize_agent(agent,nb_steps,
 
     agent.env.close()
     agent.env.reset()
+
+    #we initialize the grid of the nca
+    #usualy for tseting we use a batch size of 1
+    agent.model.grid_pool.reinit_and_sample()
+
     for k in range(nb_steps):
 
         ca_steps = np.random.randint(50,60)
@@ -386,13 +391,3 @@ def get_hidden_chan_rgb(grids, ranges=[(-1,1), (-1,1), (-1,1)]):
     rgb = np.clip(rgb, 0,1)
     return rgb
 
-if __name__ == "__main__":
-    inp_new_cor = [(11, 26),(25,20),(5,20),(19,6),(19,26),(5,12),(25,12) ,(11, 6)]
-    outp = [(13,16), (17,16)]
-    agent = DQNAgent(auto_reset=False)
-
-    path = "Real final experiment/Final model/"
-    agent.model.neuralCA.dmodel.load_weights(path+"final_dmodel")
-
-
-    g =visualize_agent(agent, 500, output_video=True)
