@@ -13,7 +13,25 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
 
 	<link rel="stylesheet" href="style/style.css">
-	
+
+	<script>
+	function preLoad() {
+	  a1 = new Image; a1.src = 'img/ori_model_info_flow.png';  
+	  a2 = new Image; a2.src = 'img/reprod1_info_flow.png';
+	  a3 = new Image; a3.src = 'img/reprod2_info_flow.png';
+	  v1 = new Image; v1.src = 'videos/grid_and_envi/no_noise_no_damage_small.mp4';
+	  v2= new Image; v2.src = 'videos/grid_and_envi/model_reprod1.mp4';
+	  v3= new Image; v3.src = 'videos/grid_and_envi/model_reprod2.mp4';
+	}
+	function im(image) {
+	  document.getElementById(image[0]).src = eval(image + ".src")
+	}
+	</script>
+ 
+
+<body onLoad="preLoad()">
+
+
   </head>
   
   <body class="margin-m">
@@ -23,7 +41,7 @@
 
 	<h1> Towards self-organized control </h1>
 	<h3 class="nobold"> Using neural cellular automata to robustly control a cart-pole agent</h3>
-	<h4 class="nobold"> Alexandre Variengien <sup>1,2,3</sup>, Stefano Nichele<sup>1,2,*</sup>, Tom Glover<sup>1</sup>, Sidney Pontes-Filho<sup>1,4</sup></h4>
+	<h4 class="nobold"> Alexandre Variengien <sup>1,2,3</sup>, Sidney Pontes-Filho<sup>1,4</sup>, Tom Glover<sup>1</sup>, Stefano Nichele<sup>1,2,*</sup></h4>
 	<small class="nobold"><sup><small>1</small></sup> Department of Computer Science, Oslo Metropolitan University, Oslo (Norway)  <br>
 					   <sup><small>2</small></sup> Department of Holistic Systems, Simula Metropolitan Centre for Digital Engineering, Oslo (Norway) <br>
 					   <sup><small>3</small></sup> Department of Computer Science, École Normale Supérieure de Lyon, Lyon (France) <br>
@@ -31,10 +49,9 @@
 					   <sup><small>*</small></sup> Corresponding author: <a href="mailto:stenic@oslomet.no">stenic@oslomet.no</a>
 	</small>
 
-	<h5 class="margin-m" style="color:#F00000";> June 28, 2021 - this draft paper is a preprint work-in-progress, an extended and updated version will be available shortly together with the code. </h5>
+	<h5 class="margin-m"> July 9, 2021</h5>
 	
 	A pdf version of this preprint is available on arXiv <a href="https://arxiv.org/abs/2106.15240">here</a>.
-	
 	<video autoplay loop muted width="750" class="center">
 		<source src="videos/grid_and_envi/noise_no_damage_crop.mp4"
 				type="video/mp4" class="center" >
@@ -53,7 +70,7 @@
 			decades. These studies led to the discovery of the intricate mechanisms by which gradients of chemicals and local cell interactions
 			shape the differentiation of pre-neural cells and the organization of their connections 
 			<a class="ref" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2742095/" >[1]<span>
-			Gradients in the Brain: The Control of the Development of Form and Function in the Cerebral Cortex, Stephen N. Sansom and Frederick J. Livesey</span></a>.
+			Sansom, Stephen N., and Frederick J. Livesey. "Gradients in the brain: the control of the development of form and function in the cerebral cortex."<i> Cold Spring Harbor perspectives in biology</i> 1.2 (2009): a002519.</span></a>.
 			
 		</p>
 		<p>
@@ -61,47 +78,51 @@
 			continuously until death, and the shape and the strength of their connections change.
 			Such neural plasticity is influenced by the sensory inputs received by the individual and is considered to be 
 			at the root of the emergence of intelligence. In addition to the ability to cope with a changing environment, 
-			plasticity provides a remarkable robustness. For example, after a stroke, the neural network reorganizes in a new
+			plasticity provides remarkable robustness. For example, after a stroke, the neural network reorganizes in a new
 			architecture to preserve motor function
 			<a class="ref" href="https://www.sciencedirect.com/science/article/pii/S0079612305500360" >[2]<span>
-			Neural plasticity and recovery of function, Nick S.Ward</span></a>.
+			Ward, Nick S. "Neural plasticity and recovery of function."<i> Progress in Brain Research</i> 150 (2005): 527-535.</span></a>.
 			It can also adapt to sensory deprivation to extract the most information from the remaining senses. 
-			In blind individuals, the processing of auditive information can be partially deferred to the visual cortex, 
+			This is the case in blind individuals: the processing of auditive information can be partially deferred to the visual cortex, 
 			improving their sound localization abilities
 			<a class="ref" href="https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.0030027" >[15]<span>
-			A Functional Neuroimaging Study of Sound Localization: Visual Cortex 
-					Activity Predicts Performance in Early-Blind Individuals, 
-							Frédéric Gougoux et al.</span></a>.
+			Gougoux, Frédéric, et al. "A functional neuroimaging study of sound localization: visual cortex activity predicts performance in early-blind individuals."<i> PLoS biology</i> 3.2 (2005): e27.</span></a>.
 		</p>
 		<p>
-			The neural plasticity can be considered as a part of the whole biological mechanism governing homeostasis of both 
+			Neural plasticity can be considered as a part of the whole mechanism governing homeostasis of both 
 			shape and function. This conceptual proximity is also justified by biological evidence such as the discovery 
 			of the role of electrical activity during morphogenesis. In particular, the same ion channels are used both for local 
 			communication between non-neuronal cells during embryogenesis and in the neurons to carry action potentials 			
-			<a class="ref" href="https://onlinelibrary.wiley.com/doi/epdf/10.1002/bem.10104" >[3]<span>Bioelectromagnetics in morphogenesis, Michael Levin</span></a>.
+			<a class="ref" href="https://onlinelibrary.wiley.com/doi/epdf/10.1002/bem.10104" >[3]
+			<span>Levin, Michael. "Bioelectromagnetics in morphogenesis."<i> Bioelectromagnetics</i> 24.5 (2003): 295-315.</span></a>.
 			
-			More generally, there seems to exists a continuum between the phenomena we usually call <i> growing</i>, 
-			<i> learning</i> and <i>computing</i>. 
+			More generally, there seems to exist a continuum between the phenomena we usually call <i> growing</i>, 
+			<i> learning</i>, and <i>computing</i>. 
 			Each of these abilities may be considered a different aspect of the same underlying self-organizing system.
 		</p>
 		<p>
 			Moreover, there is evidence that the DNA does not encode precise details of the resulting neural network. 
 			There is an information gap between the size of the DNA and the complexity of the neural network, generally 
-			referred to as <i>genomic bottleneck</i> <a class="ref" href="https://www.nature.com/articles/s41467-019-11786-6" >[4]<span>A critique of pure learning and what artificial neural networks can learn from animal brains, Anthony M. Zador</span></a>. 
-			The DNA specifies the local behavior of cells through the shape of the proteins it encodes. The neural 
-			network is then a structure that emerges through these local interactions and yields a useful biological 
+			referred to as <i>genomic bottleneck</i> 
+			<a class="ref" href="https://www.nature.com/articles/s41467-019-11786-6" >[4]
+			<span>
+			Zador, Anthony M. "A critique of pure learning and what artificial neural networks can learn from animal brains."<i> Nature communications</i> 10.1 (2019): 1-7.
+			</span></a>. 
+			The DNA only specifies the local behavior of cells through the shape of the proteins it encodes. The neural 
+			network is then a structure that emerges through these local interactions and yields useful biological 
 			processing of the inputs received by the senses
-			<a class="ref" href="https://link.springer.com/chapter/10.1007/1-4020-7782-3_11" >[5]<span>The Challenge Of Complexity, Wolfgang Banzhaf</span></a>.
+			<a class="ref" href="https://link.springer.com/chapter/10.1007/1-4020-7782-3_11" >[5]
+			<span>Banzhaf, Wolfgang, and Julian Miller. "The challenge of complexity."<i> Frontiers of Evolutionary Computation.</i> Springer, Boston, MA, 2004. 243-260.</span></a>.
 		</p>
 		
 		<p>
 			Despite the crucial role of growth in the emergence of intelligence, modern advances in artificial neural 
-			networks mainly focus on the handcrafted design of static map of neural connections. During the phase 
+			networks mainly focus on the handcrafted design of static maps of neural connections. During the phase 
 			called <i>learning</i>—that is in fact quite far from the biological sense of this 
-			word <a class="ref" href="https://www.nature.com/articles/s41467-019-11786-6" >[4]  
-					<span>A critique of pure learning and what artificial 
-					neural networks can learn from animal brains, Anthony M. Zador
-					</span></a>
+			word <a class="ref" href="https://www.nature.com/articles/s41467-019-11786-6" >[4]
+			<span>
+			Zador, Anthony M. "A critique of pure learning and what artificial neural networks can learn from animal brains."<i> Nature communications</i> 10.1 (2019): 1-7.
+			</span></a>
 				—the connections of this architecture are optimized to reduce the error on the task to solve.
 			
 		</p>
@@ -109,18 +130,19 @@
 		<p>
 			Some effort has been made to include an automatic process to incrementally design neural network architectures. 
 			These techniques include the use of genetic algorithms 
-					<a class="ref" href="https://ieeexplore.ieee.org/abstract/document/1004508" >[6]<span>Efficient evolution of neural network topologies, K.O. Stanley and R. Miikkulainen</span></a>,
-					pruning of connection 
+					<a class="ref" href="https://ieeexplore.ieee.org/abstract/document/1004508" >[6]<span>
+					Stanley, Kenneth O., and Risto Miikkulainen. "Efficient evolution of neural network topologies."<i> Proceedings of the</i> 2002 Congress on Evolutionary Computation. CEC'02 (Cat. No. 02TH8600). Vol. 2. IEEE, 2002.
 					<a class="ref" href="https://medvet.inginf.units.it/publications/2021-c-nmpzn-effects/" >[7] 
-						<span>On the Effects of Pruning on Evolved Neural Controllers for Soft Robots, Giorgia Nadizar et al.</span>
+						<span>Giorgia Nadizar et al. "On the Effects of Pruning on Evolved Neural Controllers for Soft Robots"<i> Proceedings of the Genetic and Evolutionary Computation Conference Companion.</i> Pages 1744–1752 </span>
 					</a>
 			or the introduction of a growing phase in artificial neural networks
 					<a class="ref" href="https://direct.mit.edu/isal/proceedings/isal2020/32/473/98437" >[8] 
-						<span>Evolving developmental neural networks to solve multiple problems, Julian Francis Miller</span>
+						<span>Miller, Julian Francis. "Evolving developmental neural networks to solve multiple problems."<i> Artificial Life Conference Proceedings.</i> One Rogers Street, 
+						Cambridge, MA 02142-1209 USA journals-info@ mit. edu: MIT Press, 2020.</span>
 					</a>
 					<a class="ref" href="https://arxiv.org/abs/2006.06629" >[9]<span>
-					Growing Artificial Neural Networks, John Mixter and Ali Akoglu</span></a>.
-			Nonetheless, in these works the process is a tool of navigating the topological parameter space, rather then treating the learning 
+					Mixter, John, and Ali Akoglu. "Growing Artificial Neural Networks." arXiv preprint arXiv:2006.06629 (2020).</span></a>.
+			Nonetheless, in these works, the process is a tool for navigating the topological parameter space, rather than treating the learning 
 			as a developmental problem. 
 		</p>
 		<p>
@@ -128,27 +150,29 @@
 			Successful approaches used cellular automata along with artificial neural networks implementing local rules. They were able to produce complex
 			patterns from localized interactions. 
 					<a class="ref" href="https://core.ac.uk/download/pdf/147570059.pdf" >[18] 
-						<span>CA-NEAT: Evolved Compositional Pattern Producing Networksfor Cellular Automata Morphogenesis and Replication, Stefano Nichele et al.</span>
+						<span>Nichele, Stefano, et al. "CA-NEAT: evolved compositional pattern producing networks for cellular automata morphogenesis and replication."<i> 
+						IEEE Transactions on Cognitive and Developmental Systems</i> 10.3 (2017): 687-700.</span>
 					</a>
 					<a class="ref" href="https://distill.pub/2020/growing-ca/" >[10] 
-						<span>Growing Neural Cellular Automata, Alexander Mordvintsev et al.</span>
+						<span>Mordvintsev, Alexander, et al. "Growing neural cellular automata."<i> Distill</i> 5.2 (2020): e23.</span>
 					</a>.
 		</p>
 		
 		<p>
 			More radical approaches tried to develop an artificial substrate where life-like phenomena could emerge in an open-ended environment
 					<a class="ref" href="https://arxiv.org/abs/2101.07627" >[16]<span>
-					Self-Organizing Intelligent Matter: A blueprint for an AI generating algorithm, Karol Gregor and Frederic Besse</span>
+					Gregor, Karol, and Frederic Besse. "Self-Organizing Intelligent Matter: A blueprint for an AI generating algorithm." arXiv preprint arXiv:2101.07627 (2021).</span>
 					</a>
 					<a class="ref" href="https://arxiv.org/abs/2005.03742" >[17]<span>
-					Lenia and Expanded Universe, Bert Wang-Chak Chan</span></a>.
-			Despite their great promise, we are still far from recreating the whole evolution process that give rise to intelligence.
+					Chan, Bert Wang-Chak. "Lenia and expanded universe." arXiv preprint arXiv:2005.03742 (2020).</span></a>.
+			Despite their great promise, we are still far from recreating the whole evolution process that gives rise to intelligence.
 		</p>
 
 		<p>
-			 In this work, we attempt at bridging the gap between growth and computation by using neural cellular automaton (CA) 
-					<a class="ref" href="https://distill.pub/2020/growing-ca/" >[10]<span>
-					Growing Neural Cellular Automata, Alexander Mordvintsev et al.</span></a>.
+			 In this work, we attempt at bridging the gap between growth and computation by using neural cellular automata (neural CA) 
+					<a class="ref" href="https://distill.pub/2020/growing-ca/" >[10] 
+						<span>Mordvintsev, Alexander, et al. "Growing neural cellular automata."<i> Distill</i> 5.2 (2020): e23.</span>
+					</a>.
 			 Neural CA is a spatially distributed system composed of 
 			 cells that interact through local interaction. Their update rule consists of an artificial neural network and thus 
 			 can be optimized through classical and efficient gradient descent-based techniques. Even if the learning process 
@@ -163,14 +187,14 @@
 
 		<p>
 			The cart-pole problem is a commonly used toy problem in the reinforcement learning community. In this
-			environment, an agent controls a cart-pole system. It can observe the pole angle and angular velocity, 
+			environment, an agent controls a cart-pole system. It can observe the pole angle and its angular velocity, 
 			the cart position, and its linear velocity. 
-			Based on these observations, it must decide whether to apply a force on the left or the right of the cart in order
+			Based on these observations, the agent must decide whether to apply a force on the left or the right of the cart in order
 			to maximize reward, i.e. the time spent with the pole up and the cart in the center. 
-			The simulation ends if the cart hit a wall or if the pole fall.
+			The simulation ends if the cart hits a wall or if the pole falls.
 			
-			We chose this problem because of its low number of inputs and outputs that enables us to
-			use a small-sized grid and an easy experimentation environment.
+			We chose this problem because of its low number of inputs and outputs that allow the use of 
+			a small-sized grid and an easy experimentation environment.
 			
 			<div>
 			<img src = "img/cartepole_envi.png" width="400" class="center" >
@@ -179,12 +203,13 @@
 								the bottom arrow, the velocity of the cart.
 			</div>
 			We used the implementation of this environment provided by the <a href="https://gym.openai.com/">OpenAI gym library</a>.
-			We used a custom reward function to favor agents that stay on the center.
+			We modified the reward function to favor agents that stay in the center.
 			<div>
-			<img src = "img/reward.png" width="150" class="center" >
+			<img src = "img/reward.png" width="50%" class="center" >
 			</div>
-			<div class="caption">The reward given at time step t. x is the position of the cart, L the length of the pole. On the center (x=0), the
+			<div class="caption">The reward at a time step t. x is the position of the cart, L the length of the track. On the center (x=0), the
 								agent receives 1, the maximum reward, while if it is on the edges of the track (x= &pm; L), the agent receives 0, the minimum reward. 
+								We penalize the events when the cart hit a wall or the pole fall by rewarding -100 in these cases.
 			</div>
 		</p>
 
@@ -193,23 +218,23 @@
 			There are 3 types of cells in a grid: the intermediate, the input, and output cells.
 		</p>
 		<p>
-			The state of each cell is composed of 6 channels. The first is the <i> information channel</i> where meaningful
+			The state of each cell is composed of 6 channels. The first is the <i>information channel</i> where meaningful
 			input and output information transit. The third is identifying the inputs: it is equal to 1 in the input cells, 0 elsewhere.
 			The fourth similarly identifies the outputs. The remaining three are hidden channels.
 		</p>
 		<p>
-			The state of the input cell cannot be changed, the information channel transmit the observation from the environment
+			The state of the input cells cannot be changed, the information channel transmits the observation from the environment,
 			and the other channels except the output identifier are set to 1.
 			The values of the information channel of the output cells are used as the output of the system to be optimized
 			to solve the task.
 		</p>
 		<p>
-			The meaning of each channel and the different type of cells are represented in the figure below.
+			The meaning of each channel and the different types of cells are represented in the figure below.
 		</p>
 			<div>
 			<img src = "img/cell_states.png" width="700" class="center" >
 			</div>
-			<div class="caption">The role of the different channels and type of cells. Channels that 
+			<div class="caption">The role of the different channels and types of cells. Channels that 
 				are fixed are represented in red and in black are channels that can be modified by the update rule.
 				</div>
 
@@ -218,7 +243,7 @@
 				We use redundancy in the inputs: each of the 4 physical observations of the environment is linked to 2 input cells.
 				We thought it could improve the opportunity for information combination and robustness. 
 				Note that the type of information contained in the input is not directly provided. To know which observation 
-				each input cell encodes, the CA must rely on the spatial position of the inputs or on the value of the information channel.
+				each input cell encodes, the CA must rely on the spatial position of the inputs or the value of the information channel.
 			</p>
 			<p>
 				The value of each observation is scaled by a constant factor before being transmitted to the input cell. The choice of the 
@@ -226,7 +251,7 @@
 			</p>
 		<h4> Cell position </h4>
 		<p>
-			The 8 inputs are arranged in an octagonal shape (dotted line) on a 32x32 grid with zeros at the boundary. The two output cells are offset by 2 cells from the center of the octagon.
+			The 8 inputs are arranged in an octagonal shape (dotted line) on a 32x32 grid with zeros at the boundaries. The two output cells are offset by 2 cells from the center of the octagon.
 			We chose this configuration to ensure an almost equal distribution of the distance between each input and output.
 			<div>
 			<img src = "img/io_position.png" width="300" class="center" >
@@ -237,31 +262,40 @@
 	
 	<h2> Model </h2>
 		<p>
-			Except the design of the cell states, the neural CA architecture we used is similar to the one described for the self-classifying MNIST task 
+			Except for the design of the cell states, the neural CA architecture we used is similar to the one described for the self-classifying MNIST task 
 					<a class="ref" href="https://distill.pub/2020/selforg/mnist/" >[11]<span>
-					Self-classifying MNIST Digits, Ettore Randazzo et al.</span></a>.
-			The perception layer is composed of 20 learnable 3x3 filters, and the single hidden layers counts 30 units.
-			In total our model has 1854 learnable parameters. 
+					Randazzo, Ettore, et al. "Self-classifying MNIST Digits."<i> Distill</i> 5.8 (2020): e00027-002.</span></a>.
+			The perception layer is composed of 20 learnable 3x3x6 filters, and the single hidden layer counts 30 units.
+			In total, our model has 1854 learnable parameters. 
 		</p>
 		<p>
 			
 			As in the original model, the update rule is stochastic: at each step, each cell
 			has a 0.5 probability of being updated. This choice is made to avoid temporal synchronization that relies on a centralized clock.
+			The figure below summarizes the architecture of our model.
+			
+			<div>
+			<img src = "img/model.png" width="100%" class="center" >
+			</div>
+			<div class="caption">The architecture of our model. Positive values are depicted in red, negative in blue. Green objects
+								identify the learnable parameters of the model.</div>
 		</p>
+		
+		
 	<h2> Training procedure </h2>
 		<p>
 			Our model can be abstracted as a black-box function that takes inputs (that will be fed to the information channel of input cells)
-			and transform them in outputs (the information channel of output cells). This function is differentiable with respect to its
-			parameters (the neural network used as update rule) and thus they can be optimized with classical gradient descent techniques.
-			In this case we used the Adam optimized provided by the TensorFlow library. 
+			and transforms them into outputs (the information channel of output cells). This function is differentiable with respect to its
+			parameters (the neural network used as the update rule) and thus can be optimized with classical gradient descent techniques.
+			In this case, we used the Adam optimizer provided by the TensorFlow library. 
 		</p>
 		<h4> Algorithm </h4>
 		<p>
 			To tackle the cart-pole problem, we used Deep Q-learning 
 					<a class="ref" href="https://arxiv.org/abs/1312.5602" >[12] 
-						<span>Playing Atari with Deep Reinforcement Learning, Volodymyr Mnih et al.</span>
+						<span>Mnih, Volodymyr, et al. "Playing atari with deep reinforcement learning." arXiv preprint arXiv:1312.5602 (2013).</span>
 					</a>
-			where the usual artificial neural network is seamlessly replaced by the neural CA.
+			where the usual artificial neural network is seamlessly replaced by a neural CA.
 			The deep Q-learning algorithm aims at approaching the expected reward given a state and an action.
 			More precisely, the function to be learned is given by:
 			
@@ -274,79 +308,137 @@
 		<h4> Loss function </h4>
 			<p>
 			The loss function for the task is the L2 loss between the output and the target.
-			To achieve long term stability, we added a penalty for 
-			cells that have channels value out of bound [-5,5]. Note that excepted this overflow condition,
+			To achieve long-term stability, we added a penalty for 
+			cells that have channel values out of bound [-5,5]. Note that excepted this overflow condition,
 			the states of the intermediate cells are not directly optimized, they are free to evolve insofar as their influence on the outputs
-			reduce the error.
+			reduces the error.
 			
 			<div><img src = "img/loss_formula.png" width="100%" class="center"  ></div>
 			<div class="caption">N is the size of the grid, &lambda; a parameter to control the amount of overflow penalty.</div>
 
-
 			</p>
-		<h4> Neural CA training </h4>
-			<p>
-				As introduced in <a class="ref" href="https://distill.pub/2020/growing-ca/" >[10] 
-									<span>Growing Neural Cellular Automata, Alexander Mordvintsev et al.</span>
-								</a> 
-					we used pool sampling for the states of the neural CA during training.
-				We let the CA evolves for a random number of steps from 50 to 60 between the update of the input values and the readout of
-				the outputs.
-			</p>
-		
-		
-		<h4>Model initialization </h4>
-			<p>
-				We found that when trained directly for the task, the model was trapped in a local minimum where it outputted constant values, no matter
-				the state of the inputs.
-				We think that this is due to the fact that there needs to be iterated applications of the update rule on each of the cells between the inputs and outputs
-				to transmit and modify the information.
-				This repeated use of a neural network makes the gradient vanish, as observed
-				in vanilla Recurrent Neural Networks
-								<a class="ref" href="https://www.worldscientific.com/doi/abs/10.1142/s0218488598000094" >[13]<span>
-								The Vanishing Gradient Problem During Learning Recurrent Neural Nets and Problem Solutions, Sepp Hochreiter</span></a>.
-			</p>
-			<p>
-				To solve this problem, we first trained the neural CA on an easier task: 
-				both outputs were optimized to compute the mean of the inputs. 
-				We found that it was able to learn with a reasonably low error after several thousand training steps.
-			</p>
-			<p>
-				This initialization enables the neural CA to learn to stabilize the states of the cells, make an information link 
-				from input to output, and a primitive combination of the input values at the output cells. This procedure 
-				is similar to what is used in curriculum learning <a class="ref" href="https://ronan.collobert.com/pub/matos/2009_curriculum_icml.pdf" >[14] 
-																		<span>Curriculum Learning, Yoshua Bengio et al.</span>
-																  </a>  
-								
-								where an easy subset of the task is learned before tackling the whole problem.
-				Here we did not used a sub-task as a starting point but a different task that shared common requirements.
-			</p>
+			
 		<h4> Robustness </h4>
 			<h6> Damage </h6>
 			<p>
-				To learn to recover from damage, we added damage to the grids present in the pool of sample. 
-				Each grid has a 0.5 probability of receiving damage.
+				To increase the robustness of the system, we damage half of the grids present in the pool. 
 				
-				A damage consist in a circle of the grid replaced by uniform random values in [-1,1], as shown
-				in black below. Note that a damage impact all the channels that can be modified and that inputs are not affected by damage while outputs are.
+				Damage consists of a circle of the grid replaced by uniform random values in [-1,1], as shown
+				in black below. Note that damage impacts all the channels that can be modified and that inputs are not affected by damage while outputs are.
 				<div><img src="img/damage.png" width="500" class="center" ></div>
 				<div class="caption">
-					A damage shown on the information channel. The shape of the damage is an irregular circle due to rasterization effect.
+					A damaged grid shown on the information channel. The shape of the damaged region is an irregular circle due to rasterization effects.
 				</div>
 			</p>
 			<h6> Noise </h6>
 			<p>
-				Before applying each update, we added a uniform noise. Following what was done in 
+				Before applying each update, we perturbed it with uniform noise. Following what was done in 
 				<a class="ref" href="https://distill.pub/2020/selforg/mnist/" >[11]<span>
-				Self-classifying MNIST Digits, Ettore Randazzo et al.</span></a>, 
-				we used noisy update to force a long-term stabilization of the
-				states of the CA. <!-- since it would learn to cope with perturbation at every step.-->
+					Randazzo, Ettore, et al. "Self-classifying MNIST Digits."<i> Distill</i> 5.8 (2020): e00027-002.</span></a>, 
+				we used a noisy update to favor a long-term stabilization of the
+				cell states. <!-- since it would learn to cope with perturbation at every step.-->
 			</p>
+			
+			
+		<h4> Neural CA training </h4>
+		
+			<p>
+				As introduced in <a class="ref" href="https://distill.pub/2020/growing-ca/" >[10] 
+						<span>Mordvintsev, Alexander, et al. "Growing neural cellular automata."<i> Distill</i> 5.2 (2020): e23.</span>
+					</a>
+					we used pool sampling for the states of the neural CA during training to learn persistent behavior.
+			</p>
+			<p>
+				As described in the deep-Q learning algorithm, we alternate phases where we explore the environment by letting the neural CA 
+				controls the cart-pole agent and by taking random actions; and training of the neural CA using the target values based on the rewards stored in the
+				memory of the agent. 
+			</p>
+			
+			<h5> Environment exploration </h5>
+			<p>
+				To get a stable long-term behavior of the cart-pole agent we did not use a fixed horizon for the environment. 
+				Instead, we use pool sampling also for the states of the cart-pole, as done 
+				for the neural CA grids. 
+			</p>
+
+			<p>
+				The probability of taking a random action is given by the parameter &epsilon; that is decreased
+				during the training of the agent, as in the original deep-Q learning algorithm. 
+				
+				The exploration of the environment begins by sampling a grid from the grid pool, a cart-pole state from the pool of environment states. Then we let the 
+				neural CA, starting from the sampled grid, evolve for a random number of steps from 50 to 60. After, we choose the action that corresponds to the greatest output of the neural CA and
+				obtain a new environment state.
+				We put the grid back in the grid pool and sample a new one. We repeat this operation for K environment steps. 
+			<p>
+			</p>
+				If the environment ends, we reset the environment to reach the end of 
+				the K steps. After the K steps, the state of the cart-pole is committed in the pool of environment states.
+				We also randomly replace grids by the initial state to be sure that the neural CA always keeps the knowledge of how to start
+				from a raw grid. The procedure is illustrated in the figure below.
+			</p>
+			<p>
+				<div><img src="img/exploration.png" width="100%" class="center" ></div>
+				<div class="caption">
+					The procedure for the exploration phase. We match cart-pole states and grids randomly sampled from two independent
+					pools. This provides a way to simulate long-term dynamics both for the cart-pole environment and
+					for the neural CA. In practice we used K=2.
+				</div>
+			</p>
+		
+			
+			<h5> Training </h5>
+				Between each exploration phase, we sample several batches of transitions (o<sub>t</sub>, a<sub>t</sub>, r<sub>t</sub>, o<sub>t+1</sub>)—where o<sub>t</sub> is the 
+				observation at time t, a<sub>t</sub> the action taken, and  r<sub>t</sub> the reward received—from the memory of the agent that were stored during the exploration phases.
+				We train the neural CA according to the expression of the target value and the error to optimize given by the deep-Q learning algorithm and shared below.
+				Then, each transition is matched with a neural CA grid randomly sampled among the pool of grids that we let evolve for 50 to 60 steps. We next compute the loss on the
+				final state of the grid and we perform a gradient step on a batch composed of 16 such grids.
+				As described in <a class="ref" href="https://distill.pub/2020/growing-ca/" >[10]
+						<span>Mordvintsev, Alexander, et al. "Growing neural cellular automata."<i> Distill</i> 5.2 (2020): e23.</span>
+					</a>, back-propagation through time is used to compute the gradient of the loss with respect to 
+				the parameters of the update rule.
+				
+				<div><img src = "img/target_value.png" width="60%" class="center"  ></div>
+				<div class="caption">The target value y<sub>j</sub> for a given transition (o<sub>j</sub>, a<sub>j</sub>, r<sub>j</sub>, o<sub>j+1</sub>) sampled
+										from the memory of the agent and the expression of the L2 error to optimize. Q(a<sub>j</sub>,o<sub>j</sub>;&theta;) is the output of the neural CA for an action a<sub>j</sub>
+										and an observation o<sub>j</sub>. &theta; are the parameters of the update rule to be optimized.</div>
+				<p>
+				The training procedure runs for around 15k gradient descent steps and 3k environment steps. The training took between 20 min and 1H on a GPU.
+				We used a learning rate of 5e-3 that decays to 5e-4 and then to 5e-5 after respectively 1000 and 10000 steps.
+				Note that the hyperparameters used the training were not optimized and we mainly aimed at solving the task, not efficiency.
+				</p>
+		<h4>Model initialization </h4>
+			<p>
+				We found that when trained directly for the task, the model was trapped in a local minimum where it outputted constant values, no matter
+				the state of the inputs.
+				We think that this is because there need to be iterated applications of the update rule on each of the intermediate cells between the inputs and outputs
+				to transmit and modify the information.
+				This repeated use of a neural network makes the gradient vanish, as observed
+				in vanilla Recurrent Neural Networks
+								<a class="ref" href="https://www.worldscientific.com/doi/abs/10.1142/s0218488598000094" >[13]<span>
+								Hochreiter, Sepp. "The vanishing gradient problem during learning recurrent neural nets and problem solutions."<i> International Journal 
+								of Uncertainty, Fuzziness and Knowledge-Based Systems</i> 6.02 (1998): 107-116.</span></a>.
+			</p>
+			<p>
+				To solve this problem, we first trained the neural CA on an easier task: 
+				both outputs were optimized to compute the mean of the inputs. 
+				We found that it was able to learn with a reasonably low error after several thousand gradient descent steps.
+			</p>
+			<p>
+				This initialization enables the neural CA to learn to stabilize the states of the cells, make an information link 
+				from input to output, and a linear combination of the input values at the output cells. This procedure 
+				is similar to what is used in curriculum learning <a class="ref" href="https://ronan.collobert.com/pub/matos/2009_curriculum_icml.pdf" >[14] 
+																		<span>Bengio, Yoshua, et al. "Curriculum learning."<i> Proceedings of the</i> 26th annual international conference on machine learning. 2009.</span>
+																  </a>  
+								
+								where an easy subset of the task is learned before tackling the whole problem.
+				Here we did not use a sub-task as a starting point but a different task that shared common requirements.
+			</p>
+		<p>
+			 The whole training procedure can be reproduced online in a <a href="https://colab.research.google.com/github/aVariengien/self-organized-control/blob/main/code/Towards-self-organized-control-notebook.ipynb">Google Colab notebook.</a>
+		</p>
+
 	<h2> Results </h2>
-	<p>
-	We ran the training procedure for 200k gradient descent steps and several hundreds of environment simulations. Note
-	that the hyperparameters for the training were not optimized and we mainly aimed at solving the task, not efficiency.
-	</p>
+
 	
 	<h4> From estimating Q-values to stable behavior </h4>
 	<p>
@@ -354,16 +446,17 @@
 		cart-pole agent, we begin by transmitting the observation of the current state in the input cells. We let the 
 		neural CA evolve for a random number of steps between 50 and 60. We take the action
 		corresponding to the maximum output value and we input the new observation to the neural CA.
-		
 		The grid is initialized with uniform random values and the same grid is used during the whole
 		simulation.
+		After training, the cart-pole controller with neural CA is tested for how long the pole can remain balanced. Moreover, we verify its resistance to damage, noise, and input deletion.
+
 	</p>
 	
 	<p>
 		Our model was able to solve the cart-pole problem and achieve long-term stability of both
 		the pole balancing and of the states of the CA.
 		It was able to balance the pole for more than 10k simulation steps. A video of 9 independent
-		runs for 1000 simulation steps is shown below.
+		runs for 1000 simulation steps is shown below. 
 		
 		<div>
 		<video autoplay loop controls muted width="750" class="center">
@@ -378,59 +471,83 @@
 	
 	<h4> Resulting neural CA </h4>
 	<p>
-		Beyond performance, it is interesting to visualize the activities of the 
-		neural CA during the control of the cart-pole agent. 
+		Beyond performance, it is interesting to visualize the activities of 
+		neural CA during the control of a cart-pole agent. Below you can choose to 
+		visualize the dynamics of 3 independently trained models.
 	</p>
 		
-		
-		<div>
-		<video controls width="750" class="center">
-			<source src="videos/grid_and_envi/no_noise_no_damage_small.mp4"
-					type="video/mp4" >
-			Sorry, your browser doesn't support embedded videos.
-		</video>
+		<div class="row">
+			<div class="column">
+				<video id="v" controls width="750" class="center" src="videos/grid_and_envi/no_noise_no_damage_small.mp4" alt="">
+							Sorry, your browser doesn't support embedded videos.
+				</video>
+
+			<!--
+			<video controls width="750" class="center">
+				<source src="videos/grid_and_envi/no_noise_no_damage_small.mp4"
+						type="video/mp4" >
+				Sorry, your browser doesn't support embedded videos.
+			</video> -->
+			</div>
+			<div class="column">
+				<h6> Choose the model to show </h6>
+				<form autocomplete="off">
+					  Model 1
+					  <input type="radio" name="1" onClick="im('v1');" checked> <br>
+					  Model 2
+					  <input type="radio" name="1" onClick="im('v2');"> <br>
+					  Model 3
+					  <input type="radio" name="1" onClick="im('v3');"> <br>
+
+				</form>
+			</div>
 		</div>
+		
 		<div class="caption">
+			The results of 3 independent training procedures.
 			On the left, the states of the neural CA. 
-			For the information channel, negative values are in blue, positive in red. <br>
-			Bottom right: the plot of the output values of the neural CA. The vertical dotted lines note when 
-			the action that has the maximum expected reward is taken by the cart-pole agent.<br>
-			Green triangle: LEFT action, orange triangle: RIGHT action.
+			For the information channel, negative values are in blue, positive in red while the hidden channel as represented as RGB values.
+			Bottom right: the plot of the output values of the neural CA. The vertical dotted lines denote when 
+			the action that has the maximum expected reward is taken by the cart-pole agent.
+			Green triangle: "push left" action, orange triangle: "push right" action.
 		</div>
 		<p>
 			We observe that the first 50 steps lead to a precise spatial organization of the grid. 
-			Once stabilized, this global shape will not change during the whole run. This can be thought
-			as the developmental part of the neural CA.
+			Once stabilized, this global shape will not change during the whole run. This can be thought of
+			as the developmental part of neural CA.
 		</p>
 		<p>
 			Then, during the remaining part of the simulation, the spatial activity is changing in phase with 
 			the physical observations. This is the computing phase.
+			Even if the two phases seem to exist in the 3 models presented above, the exact organization of the grid
+			differs significantly. It is exciting to see that a wide variety of shapes emerges from optimizing for the same function!
 		</p>
 		<p>
 			Note that the output values are always really
-			close one. Since the pole is in a balanced state, the difference
+			close to one another. Since the pole is in a balanced state, the difference
 			between the expected reward after going left or right is small. Going left then right or going right 
-			then left will not yield a great difference in expected reward. 
+			then left will not yield a great difference in total reward. 
 		</p>
 	<h4> Robustness abilities </h4>
-	
 	<p>
 		During training, the neural CA has always at least 50 steps between the update of the inputs, where damage
 		can occur,
 		and the readout of the output values.
 		During testing, we also experimented with a more challenging type of damage
-		we called <i>uniformly distributed damage</i> where at each CA steps the grid has a constant
+		we called <i>uniformly distributed damage</i> where at each CA step the grid has a constant
 		probability of being damaged.
 	</p>
 	<p>
-		Because this type of damage was more difficult to cope with, we decrease the damage frequency: 
-		on average, the CA receive one damage every 4 input updates with uniformly distributed damage
+		Because this type of damage was more difficult to cope with, we decreased the damage frequency: 
+		on average, the CA receives one damage every 4 input updates with uniformly distributed damage
 		and one every 2 input updates with the damage used during training.
 	</p>
 	<p>
-		The performance of the neural CA with different perturbation is summarized in the table below.
-		The score denote the number of environment steps before the pole fall or the cart hit a wall.
+		The performance of the neural CA with different perturbations is summarized in the table below.
+		The score denotes the number of environment steps before the pole falls or the cart hits a wall.
 		In each situation, we computed the mean score on 100 independent runs as well as the standard deviation.
+		To ease the analysis, we conducted the experiments of this section only on the model 1 shown above, nonetheless
+		the main conclusions generalize to the other models.
 	</p>
 	<table>
 	  <thead>
@@ -457,20 +574,20 @@
 	  </tbody>
 	</table>
 	<div class="caption"> Performance of the cart-pole agent with several types of perturbation. The score is the number
-		of time steps the cart-pole stay balanced without hitting walls. The scores are averaged on 100 runs and are 
+		of time steps the cart-pole stays balanced without hitting walls. The scores are averaged on 100 runs and are 
 		noted <i>mean</i> &pm; <i>standard deviation</i>. </div>
 	
 	<h6> Resistance to damage </h6>
 	
 	<p>
-	We found that the neural CA was able to maintain its shape and its function despite
-	frequent damage. In the video below we can observe how the grid recover its shape after damage.
+	We found that the neural CA was able to maintain its shape and function despite
+	frequent damage. In the video below we can observe how the grid recovers its shape after damage.
 	Although damage can lead to great perturbations in the output values and so to
 	random actions, the agent is still able to stabilize the pole for several hundred steps.
 	</p>
 	<p>
 	Moreover, the neural CA was not trained to recover from uniformly distributed damage, this explains
-	the greater diminution in the average score shown in the table.
+	the greater diminution in the average score visible in the table above.
 	
 	<div>
 	<video controls width="750" class="center">
@@ -481,12 +598,12 @@
 	</div>
 	
 	<div class="caption">
-		A neural CA controls a cart-pole agent for 500 steps and recovers from grid damages.
+		A neural CA controls a cart-pole agent for 500 steps and recovers from damaged grids.
 		The frequency of damage is on average once every 18 cart-pole steps, except for the 
-		first steps where it's increased to be able to observe the regeneration of the CA. 
-		Damages can be seen around the steps 90 and 110. <br>
-		We can observe important drops in the outputs after a damage during the
-		time the CA recover.
+		first steps where it's so we are able to observe the regeneration of the CA. 
+		Damages can be seen around steps 90 and 110. <br>
+		We can observe important drops in the outputs after being damaged, during the
+		time the CA recovers.
 	</div>
 	
 	</p>
@@ -500,7 +617,7 @@
 		</div>
 		
 		<div class="caption">
-			9 independent run of 1000 steps with uniformly distributed damage (on average one damage every 4 cart-pole steps).
+			9 independent runs of 1000 steps with uniformly distributed damage (on average one damage every 4 cart-pole steps).
 			When the pole becomes red, it means the simulation is over.
 		</div>
 	<p>
@@ -513,7 +630,8 @@
 	The amount of noise added to each update is often of the same order as the difference between the two outputs when the
 	pole is in a balanced state. This is why we observe in the video below the green and orange curves
 	subject to stochastic variations that lead them to cross many times between each readout. The policy 
-	that controls the cart-pole agent is thus heavily randomized. Despite the noisy update, the neural CA can produce a probability distribution of actions such that a stable behavior emerges.
+	that controls the cart-pole agent is thus heavily randomized. Despite the noisy update, the neural CA can produce a 
+	probability distribution of actions such that a stable behavior emerges.
 	</p>
 	
 	<video controls width="750" class="center">
@@ -522,7 +640,7 @@
 		Sorry, your browser doesn't support embedded videos.
 	</video>
 	<div class="caption">
-		A neural CA controls a cart-pole agent for 500 steps with noisy update.
+		A neural CA controls a cart-pole agent for 500 steps with noisy updates.
 	</div>
 	<p>
 		Here is an overview of the cart-pole agent abilities when the neural CA is subject to noisy updates.
@@ -540,7 +658,7 @@
 		</div>
 		
 		<div class="caption">
-			9 independent runs of 1000 steps of the neural CA cart-pole agent with noisy update. <br>
+			9 independent runs of 1000 steps of the neural CA cart-pole agent with noisy updates. <br>
 		</div>
 	</p>
 	
@@ -553,12 +671,12 @@
 	</p>
 	<p>
 		We were interested in exploring this flexibility and whether our model showed robustness to input deletion.
-		Because observation from the cart-pole environment are encoded redundantly, we tested if it was able 
+		Because observations from the cart-pole environment are encoded redundantly, we tested if it was able 
 		to exploit this particularity even if it was not trained for this.
 	
 	</p>
 	<p>
-		In the video below, we can observe the consequences of deleting each input. Each column correspond to one observation type,
+		In the video below, we can observe the consequences of deleting each input. Each column corresponds to one observation type,
 		each row corresponds to the first or the second input cell encoding this observation being deleted.
 	</p>
 	
@@ -571,8 +689,8 @@
 	</div>
 	
 	<div class="caption">
-		Simulation of 1000 cart-pole steps with one input deleted. We also added noise and damage after update. 
-		Each column correspond to one observation type. Each row correspond to the first or the second input 
+		Simulation of 1000 cart-pole steps with one input cell deleted. We also added noise and damage after input updates. 
+		Each column corresponds to one observation type. Each row corresponds to the first or the second input 
 		cell encoding this observation being deleted. <br>
 	</div>
 	
@@ -582,7 +700,7 @@
 	</p>
 	
 
-	<table>
+	<table id = "DelInputTable">
 	  <thead>
 		<tr>
 		  <th> </th>
@@ -611,20 +729,21 @@
 	</table>
 
 	<div class="caption"> Mean score and standard deviation of 25 independent runs after each input deletion.
-						  The CAs were perturbed with damage after update (on average one every 2 cart-pole steps) and noisy update. </div>
+						  The CA were perturbed with damage after the update (on average one every 2 cart-pole steps) and noisy update. </div>
 	
 	<p>
-		The system seems to be dependent on a few inputs that seriously impairs performances such as the inputs encoding for pole angle and angular velocity, 
-		while others seem not to affect significantly its abilities. We hypothesize that even if it has not been directly trained to be robust to input deletion,
+		The system seems to be dependent on a few input cells that seriously impair performances such as the second input cell encoding for pole angle and the ones corresponding to the angular velocity, 
+		while others seem not to significantly affect its abilities. We hypothesize that even if it has not been directly trained to be robust to input deletion,
 		the robustness to damage and noise includes also adaptation to unseen perturbation.
 	</p>
 	
 	<p>
-		It seems that the inputs corresponding to the cart position do not affect by much the balancing abilities. So
-		we experimented how the system will react to sensory deprivation by removing these two input cells such that the system has no longer access to this observation. 
-		It is still able to maintain the pole balance for several thousands of steps (score of 3926.7 &pm; 2383 on 25 runs without noise and damage). 
+		It seems that the inputs corresponding to the cart position do not disturb the control abilities. So
+		we experimented with how the system will react to sensory deprivation by removing these two input cells such that the system has no longer access to this observation. 
+		It is still able to maintain the pole balanced for several thousand steps (score of 3926.7 &pm; 2383 on 25 runs without noise and damage). 
 		The reconfiguration of the grid can be observed in the video below.
 	</p>
+	<p>
 	
 	<div>
 		<video controls width="850" class="center">
@@ -636,80 +755,307 @@
 	
 	<div class="caption">
 		The neural CA and the cart-pole environment it controls. The input cells corresponding to the cart position
-		have been deleted and replaced by intermediate cells. No noise nor damage were added. <br>
+		have been deleted and replaced by intermediate cells. No noise nor damage was added. <br>
 	</div>
+	</p>
+	<h2> Influence field  visualization</h2>
 	
+		<p>
+		In the videos showing neural CA and the environment side to side, we can observe that the regions around input cells are producing a 
+		dynamic pattern in phase with the movements of the cart-pole. 
+		We develop a visualization tool to investigate the region of neural CA 
+		that is influenced by a particular input. To this end, we compared the evolution of the neural CA between a
+		baseline case and a case where a particular input was perturbed. We then computed the relative mean of the difference
+		for each of the cells in the grid, according to the formula below. This process is repeated on different observations sampled from the environment
+		and for several grids to get consistent patterns.
+
+		<div><img src = "img/influence_formula.png" width="60%" class="center"  ></div>
+		<div class="caption"> The expression of the deviation used to quantify the influence of a given input on the other cells. The norm is the 
+								L2 norm and is computed by treating each cell as a 6-dimensional vector. In practice, the mean
+								was computed for 50 different observations, and for each observation, we used 4 independent grids.</div> 
+		</p>
+		
+		<p>
+		We used as a perturbation the multiplication by a random number between -1 and 1. This ensures that the input will
+		not be out of the range of the possible values while allowing for a sufficient range to get interpretable visualization.
+		We experimented with different types of perturbation, the resulting visualizations were similar.
+		Each input cell is perturbed independently: its sister input cell transmitting the same observation is not affected by the
+		perturbation.
+		
+		The region of influence for each cell is visualized in the figure below for 3 different models.
+		
+		<div class="row">
+			<div class="column-80">
+				<img id="a" alt="" src = "img/ori_model_info_flow.png" width="1000" class="center"  >
+			</div>
+			<div class="column-20">
+				<h6> Choose the model to show </h6>
+				<form autocomplete="off">
+					  Model 1
+					  <input type="radio" name="1" onClick="im('a1');" checked> <br>
+					  Model 2
+					  <input type="radio" name="1" onClick="im('a2');"> <br>
+					  Model 3
+					  <input type="radio" name="1" onClick="im('a3');">
+				</form>
+			</div>
+		</div>
+		<div class="caption"> Visualization of the region of influence of each input cell. We plotted the decimal
+								logarithm of the deviation between a standard input and a perturbed one. The perturbed input cell
+								is symbolized by a red cross, black dots identify the output cells. The natural deviation without any perturbation,
+								due to the stochasticity of the system is shown on the right.
+								You can reproduce these results in this <a href="https://colab.research.google.com/github/aVariengien/self-organized-control/blob/main/code/Towards-self-organized-control-notebook.ipynb">Google Colab notebook.</a> </div>
+		</p>
+		<p>
+			For the model 1, we can observe a localized influence of the input cell with a tendency to be directed toward the right.
+			We also discovered that the inputs that cause the less performance loss if deleted (see <a href="#DelInputTable">table above</a>) were the ones positioned on the right.
+			We hypothesize that the input cells on the right side of the grid had less influence on the outputs because the CA learned
+			a rule that can be summarized as "propagate information toward the right". This is allowed by the fact that information is redundant
+			and that the majority of input cells on the right hold the same observation as an input cell on the left side. 
+		</p>
+		<p>
+			For the model 2, we observe a great amount of deviation even without any perturbation. This makes it difficult to interpret the 
+			results with perturbation. It seems that the influence of a given input cannot be visible by the fact that the values of another cell are
+			affected but in the way these values change.
+		</p>
+		</p>
+			The model 3 could be the intermediate between the two precedents. It presents more deviation without perturbation while still exhibiting a clear
+			increase in deviation localized around perturbed inputs.
+		<p>
+		<p>
+			The conclusions that can be drawn from these visualizations are still limited and must be taken carefully.
+			This technique is shared as an attempt to understand the underlying dynamics of the resulting self-organizing system.
+			We think that the development of visualization tools could be a useful step to direct the future design of self-organizing systems.
+		</p>
+		
+	<h2> Related works </h2>
+	
+	<p>
+		The idea that a controller can emerge from a self-organizing system is not new. One of the most studied
+		examples concerns the gait transition in animals i.e. going from walking to running when the 
+		velocity of the motion increases.
+		The different limb coordination strategies observed during each gait do not seem to be the result of a control plan
+		transmitted by the brain. Instead, this phenomenon has been described as a phase transition in the 
+		self-organizing system composed of the bones, nerves, and muscles used for locomotion
+		<a class="ref" href="https://psycnet.apa.org/fulltext/1995-20025-001.html" >[19]<span>
+		Diedrich, Frederick J., and William H. Warren Jr. "Why change gaits? Dynamics of the walk-run transition."<i> Journal of Experimental Psychology: Human Perception and Performance</i> 21.1 (1995): 183.</span></a>.
+					
+		This has notably been modeled by coupled differentiable equations describing mechanical dynamics and neural oscillators to reproduce walking motion
+		<a class="ref" href="https://link.springer.com/article/10.1007/BF00198086" >[20]<span>
+		Taga, Gentaro, Yoko Yamaguchi, and Hiroshi Shimizu. "Self-organized control of bipedal locomotion by neural oscillators in unpredictable environment."<i> Biological cybernetics</i> 65.3 (1991): 147-159. </span></a>.
+	</p>
+	<p>
+		More generally, it has been argued that there exists close proximity between goal-directed behavior relying
+		on feedback loops where the agent tries to adjust its action to minimize the distance to its desired state
+		and the dynamics of self-organizing systems. These two models could be different ways of thinking about
+		the same processes
+		<a class="ref" href="https://journals.sagepub.com/doi/10.1207/S15327957PSPR0604_05" >[21]<span>
+				Carver, Charles S., and Michael F. Scheier. "Control processes and self-organization as complementary principles underlying behavior."<i> Personality and social psychology review</i> 6.4 (2002): 304-315.</span></a>.
+	</p>
+	
+	<h4> Goal-directed cellular automata </h4>
+	
+	<p>
+		The artificial design of self-organizing systems has been strongly focused on cellular automata (CA) because of their simplicity and their
+		general abilities.
+		CA have been historically introduced to address general questions about multicellularity in life: how can 
+		complex shapes be created from a single cell, maintained, and then replicated?
+	</p>
+	<p>
+		While the first works focused on handcrafted rules to create self-replicating systems 
+		
+		<a class="ref" href="https://cdn.patentlyo.com/media/docs/2012/04/VonNeumann.pdf" >[22]<span>
+				Neumann, János, and Arthur W. Burks. <i>Theory of self-reproducing automata.</i> Vol. 1102024. Urbana: University of Illinois press, 1966.
+		</span></a>,
+		more recent projects complexified the rules updating the cell states. To search among the
+		wide rule spaces, genetic algorithms have been frequently used to find CA that exhibited a predefined behavior.
+
+		This enables the design of CA that robustly grows a shape, in effect exhibiting homeostasis 
+		<a class="ref" href="https://journals.sagepub.com/doi/10.1207/S15327957PSPR0604_05" >[23]<span>
+				Gerlee, Philip, David Basanta, and Alexander RA Anderson. "The impact of cellular characteristics on the evolution of shape homeostasis." arXiv preprint arXiv:1512.02474 (2015).
+		</span></a>. Another work was able to develop a targeted shape and maintain it despite damage
+		
+		<a class="ref" href="https://link.springer.com/chapter/10.1007%2F978-3-540-24854-5_12" >[24]<span>
+				Miller, Julian Francis. "Evolving a self-repairing, self-regulating, french flag organism."<i> Genetic and Evolutionary Computation Conference.</i> Springer, Berlin, Heidelberg, 2004.
+		</span></a>.
+		
+	</p>
+	<p>
+		Instead of a classical look-up table, some works used update rules implementing more complex algorithms.
+		These types of update rules were used as a generalization of evolvable circuits 
+		<a class="ref" href="http://www.fit.vutbr.cz/~bidlom/Papers/2008/kesj2008.pdf" >[25]<span>
+				Bidlo, Michal, and Jaroslav Škarvada. "Instruction-based development: From evolution to generic structures of digital circuits."<i> International Journal of Knowledge-Based and Intelligent Engineering Systems</i> 12.3 (2008): 221-236.
+		</span></a>
+		
+		to design CA that performs 
+		tasks broader than the historical goal of CA
+		<a class="ref" href="https://ieeexplore.ieee.org/document/7377086/" >[26]<span>
+				Bidlo, Michal. "On routine evolution of complex cellular automata."<i> IEEE Transactions on Evolutionary Computation</i> 20.5 (2016): 742-754.
+		</span></a>.
+		As in this case, CA have been used more generally not only for questions related to shape 
+		but also for useful decentralized computation
+		
+		<a class="ref" href="https://arxiv.org/pdf/adap-org/9303003.pdf" >[31]<span>
+				Mitchell, Melanie, Peter Hraber, and James P. Crutchfield. "Revisiting the edge of chaos: Evolving cellular automata to perform computations." arXiv preprint adap-org/9303003 (1993).
+		</span></a>.
+		
+	</p>
+	<p>
+		To improve the search with genetic algorithm and favor the evolvability, some works used variable genotype size
+		<a class="ref" href="http://www.nichele.eu/files/nichele_ices2014.pdf" >[32]<span>
+				Nichele, Stefano, and Gunnar Tufte. "Evolutionary growth of genomes for the development and replication of multicellular organisms with indirect encoding."<i></i> 2014 IEEE International Conference on Evolvable Systems. IEEE, 2014.
+		</span></a>.
+		
+		Other works also included developmental function in the CA rules in order to approach the fuzzy, one-to-many, function
+		that maps a genotype and an environment to a phenotype. This was done through the addition of self-modifying abilities in the code of each 
+		cell, leading to the creation of self-replicating systems
+		<a class="ref" href="http://www.nichele.eu/files/nichele_ppsn2016.pdf" >[27]<span>
+				Nichele, Stefano, Tom Eivind Glover, and Gunnar Tufte. "Genotype regulation by self-modifying instruction-based development on cellular automata."<i> 
+				International Conference on Parallel Problem Solving from Nature.</i> Springer, Cham, 2016.
+		</span></a>.
+		
+	</p>
+
+	
+	<h4> Neural cellular automata </h4>
+	
+	<p>
+		Precedent works used evolved neural networks to create CA that grow desired shapes 
+		<a class="ref" href="https://core.ac.uk/download/pdf/147570059.pdf" >[18]<span>Nichele, Stefano, et al. "CA-NEAT: evolved compositional pattern producing networks for cellular automata 
+		morphogenesis and replication."<i> IEEE Transactions on Cognitive and Developmental Systems</i> 10.3 (2017): 687-700.
+		</span></a>.
+		Then, the introduction of neural CA 
+		<a class="ref" href="https://distill.pub/2020/growing-ca/" >[10]
+			<span>Mordvintsev, Alexander, et al. "Growing neural cellular automata."<i> Distill</i> 5.2 (2020): e23.</span></a> allowed the optimization of the neural networks used as update rules using 
+		the language of differentiable programming instead of genetic algorithms.
+	</p>
+	<p>
+		This model adds further elements to the questions for which the CA were created. 
+		Neural CA enable the creation of self-repairing systems that can grow complex shape from a single cell in 2D 
+		<a class="ref" href="https://distill.pub/2020/growing-ca/" >[10] 
+			<span>Mordvintsev, Alexander, et al. "Growing neural cellular automata."<i> Distill</i> 5.2 (2020): e23.</span>
+		</a>
+		or in 3D
+		<a class="ref" href="https://arxiv.org/abs/2103.08737" >[28]
+		<span>Sudhakaran, Shyam, et al. "Growing 3D Artefacts and Functional Machines with Neural Cellular Automata." arXiv preprint arXiv:2103.08737 (2021).
+		</span></a>,
+		and regeneration of functional bodies such as soft robots
+		<a class="ref" href="https://arxiv.org/abs/2102.02579" >[29]<span>Horibe, Kazuya, Kathryn Walker, and Sebastian Risi. "Regenerating Soft Robots Through Neural Cellular Automata."<i> EuroGP.</i> 2021.</span></a>.
+		
+		Beyond investigating homeostasis of shape, neural CA have also been used for decentralized pattern recognition 
+		<a class="ref" href="https://distill.pub/2020/selforg/mnist/" >[11]<span>
+							Randazzo, Ettore, et al. "Self-classifying MNIST Digits."<i> Distill</i> 5.8 (2020): e00027-002.</span></a>
+		as well as texture synthesis 
+		<a class="ref" href="https://distill.pub/selforg/2021/textures/" >[30]<span>
+							Niklasson, Eyvind, et al. "Self-Organising Textures."<i> Distill</i> 6.2 (2021): e00027-003.</span></a>.
+	</p>
+		
 	<h2> Discussion </h2>
 		<p>
-			In this work, we demonstrated that neural CA can be used as a differentiable black-box function
-			in the context of Deep-Q learning. We used it to solve the simple cart-pole problem. A future challenge
-			would be to apply it in cases where the input and output dimensionality is much higher.
+			In this work, we demonstrated that neural CA can be used as a differentiable black-box function 
+			theoretically extending its applications to the approximation of any functions.
+			Here we demonstrated its abilities in the context of Deep-Q learning. We used it to solve the simple cart-pole problem.
+			A direct future challenge would be to apply it to more challenging tasks where the input and output dimensionality is much higher.
 		</p>
 		<p>
-			The computing abilities of the CA were maintained over several hundreds of 
+			The computing abilities of the neural CA were maintained over several hundreds of 
 			thousand iterations, producing an emergent stable behavior in the environment it controls for thousands of steps. 
-			Moreover the system obtained demonstrated life-like phenomena such as a developmental phase, regeneration after damage,
-			stability despite a noisy environment and robustness to unseen disruption such as input deletion.
-			We can imagine that these abilities could be useful in a decentralized hardware where each cell is 
-			processed by an independent computing unit.
+			Moreover, the system obtained demonstrated life-like phenomena such as a developmental phase, regeneration after damage,
+			stability despite a noisy environment, and robustness to unseen disruption such as input deletion. In the future,
+			we could also experiment with randomized input and output positions. This would add new challenges: recognize
+			the role of each input and output cell and then create flexible pathways to transmit and combine information. 
 		</p>
 		<p>
-			This is a step toward designing intelligent systems that incorporate 
-			self-organization abilities that are for now reserved to the living world.
+			Even if the developmental phase and the computing phase used the same rules, our system cannot
+			adapt to new environments once the training ends. Future works could explore the possibility
+			of adding plasticity abilities and useful memory of past events stored in the states of the cells. 
+			This would mean that the neural CA could recognize a particular situation, and adapt its computations accordingly. Moreover, we envision that even metaplasticity found in biological neurons 
+			<a class="ref" href="https://www.nature.com/articles/nrn2356" >[33]<span>
+							Abraham, Wickliffe C. "Metaplasticity: tuning synapses and networks for plasticity."<i> Nature Reviews Neuroscience</i> 9.5 (2008): 387-387.</span></a> could be achieved by neural CA.
 		</p>
-		
+		<p>
+			Besides the biological plausibility of neural CA, their interest also relies on the fact that they are a highly decentralized
+			computing model. Neural CA could be executed efficiently on dedicated hardware using locally connected microprocessors such as
+			cellular neural networks <a class="ref" href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.469.4942&rep=rep1&type=pdf" >[34]<span>
+							Cimagalli, Valerio, Marco Balsi, and E. Caianiello. "Cellular neural networks: A review."<i> Neural Nets WIRN Vietri’93: Proc.</i> of 
+							6th Italian Workshop (Salerno, 1993). World Sci, 1993.</span></a>. Other works explored exciting directions such as 
+							framing reaction-diffusion mechanisms as neural CA
+		<a class="ref" href="https://selforglive.github.io/alife_rd_textures/ALIFE_Reaction_Diffusion.pdf" >[30]<span>
+							Mordvintsev, Alexander, Randazzo Ettore and E. Niklasson. "Differentiable Programming of Reaction-Diffusion Patterns"</span></a>
+			that would potentially lead to implementation using chemical computing. Those reaction-diffusion systems
+			could also be applied to other tasks than shape homeostasis, such as control.
+		<p>
+		</p>
+			Beyond the dissociation of the environment and the controller, we could imagine
+			a neural CA that could perform both shape homeostasis and
+			controls the movement of this shape at the same time. If a suitable physical implementation is found, such 
+			works could give rise to new robotics and artificial devices
+			with self-organizing abilities that are for now reserved to the living world. 
+		</p>
+
 	<h2> Additional experiments </h2>
-		In addition to the cart-pole balancing problem, we explored other tasks and different variation of the neural CA model.
-		Here is a short list of the other tasks we tried that relates to problems solved in a decentralized way
-		by biological organisms.
+		In addition to the cart-pole balancing problem, we explored other tasks and different variations of the neural CA model.
+		Here is a short list of the other tasks we tried that relate to problems solved
+		by biological organisms. To keep this paper short, we chose to focus on a single task but you can
+		find videos of our additional results and the code to reproduce them <a href="https://github.com/aVariengien/self-organized-control/tree/main/code/AdditionalExperiments">here</a>.
 		
 		<ul>
-			<li> Exploring an environment to find an output cell </li>
-			<li> Following a gradient </li>
-			<li> Computing boolean functions </li>
+			<li> Exploring an environment to find a target cell: In this task, new cells can grow only next to already
+				living cells. Each cell has an energy value that controls its fire rate. The goal is, starting from a 
+				 single alive cell, to find a randomly placed target while using in total the lowest amount
+				 of energy. </li>
+			<li> Following a gradient: This task is similar to the precedent but we provide information for
+					the position of the output. Each cell possesses a read-only channel that is proportional to the distance
+					to the target. This way, the growth can be directed toward the target cell instead of being limited to strategies of random
+					exploration.
+					</li>
+			<li> Computing boolean functions: We experimented with computing simple boolean functions such as XOR or its negation, NOT XOR. The
+					environment includes 2 input and 1 output cells. In addition to damage
+					and noise, the position of the input and output cells are randomized such that to solve the task, the cells
+					must communicate without relying on fixed positions.</li>
 		</ul>
-		
+	<h2> Acknowledgment </h2>
+	<p>
+	This work was partially funded by the Norwegian Research Council (NFR) through their IKTPLUSS research and innovation 
+	action under the project Socrates (grant agreement 270961), and Young Research Talent program under the project DeepCA (grant agreement 286558). 
+	</p>
 	<h2> References </h2>
 		
-		<b>[1] </b> "Gradients in the Brain: The Control of the Development of Form 
-					and Function in the Cerebral Cortex", Stephen N. Sansom and Frederick J. Livesey
-					<br>
-		<b>[2] </b> "Neural plasticity and recovery of function", Nick S.Ward<br>
+		<b>[1]</b> Sansom, Stephen N., and Frederick J. Livesey. "Gradients in the brain: the control of the development of form and function in the cerebral cortex."<i> Cold Spring Harbor perspectives in biology</i> 1.2 (2009): a002519.<br>
+		<b>[2]</b> Ward, Nick S. "Neural plasticity and recovery of function."<i> Progress in Brain Research</i> 150 (2005): 527-535.<br>
+		<b>[3]</b> Levin, Michael. "Bioelectromagnetics in morphogenesis."<i> Bioelectromagnetics</i> 24.5 (2003): 295-315.<br>
+		<b>[4]</b> Zador, Anthony M. "A critique of pure learning and what artificial neural networks can learn from animal brains."<i> Nature communications</i> 10.1 (2019): 1-7.<br>
+		<b>[5]</b> Banzhaf, Wolfgang, and Julian Miller. "The challenge of complexity."<i> Frontiers of Evolutionary Computation.</i> Springer, Boston, MA, 2004. 243-260.<br>
+		<b>[6]</b> Stanley, Kenneth O., and Risto Miikkulainen. "Efficient evolution of neural network topologies."<i> Proceedings of the</i> 2002 Congress on Evolutionary Computation. CEC'02 (Cat. No. 02TH8600). Vol. 2. IEEE, 2002.<br>
+		<b>[7]</b> Giorgia Nadizar et al. "On the Effects of Pruning on Evolved Neural Controllers for Soft Robots"<i> Proceedings of the Genetic and Evolutionary Computation Conference Companion.</i> Pages 1744–1752 <br>
+		<b>[8]</b> Miller, Julian Francis. "Evolving developmental neural networks to solve multiple problems."<i> Artificial Life Conference Proceedings.</i> One Rogers Street, Cambridge, MA 02142-1209 USA journals-info@ mit. edu: MIT Press, 2020.<br>
+		<b>[9]</b> Mixter, John, and Ali Akoglu. "Growing Artificial Neural Networks." arXiv preprint arXiv:2006.06629 (2020).<br>
+		<b>[10]</b> Mordvintsev, Alexander, et al. "Growing neural cellular automata."<i> Distill</i> 5.2 (2020): e23.<br>
+		<b>[11]</b> Randazzo, Ettore, et al. "Self-classifying MNIST Digits."<i> Distill</i> 5.8 (2020): e00027-002.<br>
+		<b>[12]</b> Mnih, Volodymyr, et al. "Playing atari with deep reinforcement learning." arXiv preprint arXiv:1312.5602 (2013).<br>
+		<b>[13]</b> Hochreiter, Sepp. "The vanishing gradient problem during learning recurrent neural nets and problem solutions."<i> International Journal of Uncertainty, Fuzziness and Knowledge-Based Systems</i> 6.02 (1998): 107-116.<br>
+		<b>[14]</b> Bengio, Yoshua, et al. "Curriculum learning."<i> Proceedings of the</i> 26th annual international conference on machine learning. 2009.<br>
+		<b>[15]</b> Gougoux, Frédéric, et al. "A functional neuroimaging study of sound localization: visual cortex activity predicts performance in early-blind individuals."<i> PLoS biology</i> 3.2 (2005): e27.<br>
+		<b>[16]</b> Gregor, Karol, and Frederic Besse. "Self-Organizing Intelligent Matter: A blueprint for an AI generating algorithm." arXiv preprint arXiv:2101.07627 (2021).<br>
+		<b>[17]</b> Chan, Bert Wang-Chak. "Lenia and expanded universe." arXiv preprint arXiv:2005.03742 (2020).<br>
+		<b>[18]</b> Nichele, Stefano, et al. "CA-NEAT: evolved compositional pattern producing networks for cellular automata morphogenesis and replication."<i> IEEE Transactions on Cognitive and Developmental Systems</i> 10.3 (2017): 687-700.<br>
+		<b>[19]</b> Diedrich, Frederick J., and William H. Warren Jr. "Why change gaits? Dynamics of the walk-run transition."<i> Journal of Experimental Psychology: Human Perception and Performance</i> 21.1 (1995): 183.<br>
+		<b>[20]</b> Taga, Gentaro, Yoko Yamaguchi, and Hiroshi Shimizu. "Self-organized control of bipedal locomotion by neural oscillators in unpredictable environment."<i> Biological cybernetics</i> 65.3 (1991): 147-159. <br>
+		<b>[21]</b> Carver, Charles S., and Michael F. Scheier. "Control processes and self-organization as complementary principles underlying behavior."<i> Personality and social psychology review</i> 6.4 (2002): 304-315.<br>
+		<b>[22]</b> Neumann, János, and Arthur W. Burks. <i>Theory of self-reproducing automata.</i> Vol. 1102024. Urbana: University of Illinois press, 1966.<br>
+		<b>[23]</b> Gerlee, Philip, David Basanta, and Alexander RA Anderson. "The impact of cellular characteristics on the evolution of shape homeostasis." arXiv preprint arXiv:1512.02474 (2015).<br>
+		<b>[24]</b> Miller, Julian Francis. "Evolving a self-repairing, self-regulating, french flag organism."<i> Genetic and Evolutionary Computation Conference.</i> Springer, Berlin, Heidelberg, 2004.<br>
+		<b>[25]</b> Bidlo, Michal, and Jaroslav Škarvada. "Instruction-based development: From evolution to generic structures of digital circuits."<i> International Journal of Knowledge-Based and Intelligent Engineering Systems</i> 12.3 (2008): 221-236.<br>
+		<b>[26]</b> Bidlo, Michal. "On routine evolution of complex cellular automata."<i> IEEE Transactions on Evolutionary Computation</i> 20.5 (2016): 742-754.<br>
+		<b>[27]</b> Nichele, Stefano, Tom Eivind Glover, and Gunnar Tufte. "Genotype regulation by self-modifying instruction-based development on cellular automata."<i> International Conference on Parallel Problem Solving from Nature.</i> Springer, Cham, 2016.<br>
+		<b>[28]</b> Sudhakaran, Shyam, et al. "Growing 3D Artefacts and Functional Machines with Neural Cellular Automata." arXiv preprint arXiv:2103.08737 (2021).<br>
+		<b>[29]</b> Horibe, Kazuya, Kathryn Walker, and Sebastian Risi. "Regenerating Soft Robots Through Neural Cellular Automata."<i> EuroGP.</i> 2021.<br>
+		<b>[30]</b> Mordvintsev, Alexander, Randazzo Ettore and E. Niklasson. "Differentiable Programming of Reaction-Diffusion Patterns" <br>
+		<b>[31]</b> Mitchell, Melanie, Peter Hraber, and James P. Crutchfield. "Revisiting the edge of chaos: Evolving cellular automata to perform computations." arXiv preprint adap-org/9303003 (1993).<br>
+		<b>[32]</b> Nichele, Stefano, and Gunnar Tufte. "Evolutionary growth of genomes for the development and replication of multicellular organisms with indirect encoding."<i></i> 2014 IEEE International Conference on Evolvable Systems. IEEE, 2014.<br>
+		<b>[33]</b> Abraham, Wickliffe C. "Metaplasticity: tuning synapses and networks for plasticity."<i> Nature Reviews Neuroscience</i> 9.5 (2008): 387-387.<br>
+		<b>[34]</b> Cimagalli, Valerio, Marco Balsi, and E. Caianiello. "Cellular neural networks: A review."<i> Neural Nets WIRN Vietri’93: Proc.</i> of 6th Italian Workshop (Salerno, 1993). World Sci, 1993.<br>
 
-		<b>[3] </b> "Bioelectromagnetics in morphogenesis", Michael Levin<br>
-		<b>[4] </b> "A critique of pure learning and what artificial neural networks can learn from animal brains", Anthony M. Zador<br>
-		<b>[5] </b> "The Challenge Of Complexity", Wolfgang Banzhaf<br>
-		<b>[6] </b> "Efficient evolution of neural network topologies", K.O. Stanley and R. Miikkulainen<br>
-		<b>[7] </b> "On the Effects of Pruning on Evolved Neural Controllers for Soft Robots", Giorgia Nadizar et al.<br>
-		<b>[8] </b> "Evolving developmental neural networks to solve multiple problems", Julian Francis Miller<br>
-		<b>[9] </b> "Growing Artificial Neural Networks", John Mixter and Ali Akoglu<br>
-
-		<b>[10]</b> "Growing Neural Cellular Automata", Alexander Mordvintsev et al.<br>
-
-		<b>[11]</b> "Self-classifying MNIST Digits", Ettore Randazzo et al.<br>
-		<b>[12]</b> "Playing Atari with Deep Reinforcement Learning", Volodymyr Mnih et al.<br>
-		<b>[13]</b> "The Vanishing Gradient Problem During Learning Recurrent Neural Nets and Problem Solutions", Sepp Hochreiter<br>
-		<b>[14]</b> "Curriculum Learning", Yoshua Bengio et al.<br>
-		<b>[15]</b> "A Functional Neuroimaging Study of Sound Localization: Visual Cortex 
-							Activity Predicts Performance in Early-Blind Individuals", 
-									Frédéric Gougoux et al. <br>
-		<b>[16]</b> "Self-Organizing Intelligent Matter: A blueprint for an AI generating algorithm", Karol Gregor and Frederic Besse<br>
-		<b>[17]</b> "Lenia and Expanded Universe", Bert Wang-Chak Chan<br>
-		<b>[18]</b> "CA-NEAT: Evolved Compositional Pattern Producing Networksfor Cellular Automata Morphogenesis and Replication", Stefano Nichele et al.<br>
-	<!--
-	
-	* Functional homeostasis
-	* Indirect encoding of the way to solve the task
-	* development throught local interaction -> could lead to adaptation and here robustness
-	* low information encoding of complex task. The complexity can emerge in the spatial shape of the interaction
-	 while the information encoding the local law are low info // genomic bottleneck
-	* abstract computing substrate 
-	* Growing / pruning of ANN
-	* continuity growing / computing -> non neural cells precusor of neural activity -->
-	 
-	
-	
-	
   </div>
   </div>
   </body>

@@ -10,6 +10,6 @@ with the pretrained models.
 ### Structure
 
 In the `code` folder:
- * The `SelfOrgControl` package that host the class and the function to build and run the neural CA.
+ * The `SelfOrgControl` package that host the class and the function to build and run the neural CA. You can install it with `pip install git+https://github.com/aVariengien/self-organized-control.git#subdirectory=code`
  * The `AdditionalExperiments` contains code and videos about other experiment with neural CA. Each experiment has its own `README.md` file.
  * The notebook `Towards-self-organized-control-notebook.ipynb`
