@@ -13,6 +13,13 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
 
 	<link rel="stylesheet" href="style/style.css">
+	
+	  <!-- Import TensorFlow.js -->
+	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+	<!-- Import interactive demo -->
+	<script type="text/javascript" src="demo/param.js"></script>
+	<script type="text/javascript" src="demo/env.js"></script>
+	<script type="text/javascript" src="demo/script.js"></script> 
 
 	<script>
 	function preLoad() {
@@ -29,7 +36,7 @@
 	</script>
  
 
-<body onLoad="preLoad()">
+<body onLoad="init()">
 
 
   </head>
@@ -51,7 +58,101 @@
 
 	<h5 class="margin-m"> July 9, 2021</h5>
 	
-	A pdf version of this preprint is available on arXiv <a href="https://arxiv.org/abs/2106.15240">here</a>.
+	A pdf version of this preprint is available on arXiv <a href="https://arxiv.org/abs/2106.15240">here</a>. <br>
+	The code of the project can be found <a href="https://github.com/aVariengien/self-organized-control">here</a> and the results
+	are reproducible in a <a href="https://colab.research.google.com/github/aVariengien/self-organized-control/blob/main/code/Towards-self-organized-control-notebook.ipynb">Google Colab notebook</a>.
+
+
+
+	</div>
+	</div>
+	
+	<div class="row">
+	<div class="column column-80 column-offset-10">
+
+	<canvas id="ca_grid_info" width="32" height="32" hidden>
+	</canvas>
+
+	<canvas id="ca_grid_hid" width="32" height="32" hidden>
+	</canvas>
+		
+	<img id="push_left" src="img/push_left.png" hidden>
+	<img id="push_right" src="img/push_right.png" hidden>
+
+	<div class="hor_flex">
+
+		<div class="vert_flex">
+			<div class="hor_flex">
+				<div > 
+					<div class="center_title"> Information Channel </div>
+					<div>
+					<canvas id="display_info" width="300" height="300" onmouseup="endDamage();" onmousedown="beginDamage();" onmousemove="damageGrid(event, this);">
+					</canvas>
+					</div>
+				</div>
+				<div  style="margin-left:0.5em;">
+					<div class="center_title">Hidden Channels </div>
+					<div>
+					<canvas id="display_hid" width="300" height="300" onmouseup="endDamage();" onmousedown="beginDamage();" onmousemove="damageGrid(event, this);">
+					</canvas>
+					</div>
+				</div>
+			</div>
+			
+			 <div class="center">
+				<canvas id="cartpole" width="480" height="300" onClick="pertrubCartpole(event, this);">
+				</canvas>
+			</div>
+
+		</div>
+
+		<div class="vert_flex_main">
+		
+			<div style="margin-bottom:4em;">
+			<h3> Interactive demo </h3>
+			This demonstration shows a neural cellular automaton controlling a cart-pole agent. <br>
+			Click on the grids to create damage and observe how the shape regenerates. <br>
+			Click in the cart-pole environment to perturb the cart. <br>
+			</div>
+		
+			<h5> Choose the model to run </h5>
+			<form autocomplete="off">
+				  Model 1
+				  <input type="radio" name="model" onClick="ChangeModel('1');" checked> <br>
+				  Model 2
+				  <input type="radio" name="model"  onClick="ChangeModel('2');"> <br>
+				  Model 3
+				  <input type="radio" name="model"  onClick="ChangeModel('3');"> <br>
+			</form>
+
+			
+			<div class="hor_flex">
+				<div class="hor_flex">
+					<button height=50px width=50px class="button button-clear" id="reset_grid" onClick="ResetGrid();"><img width=50px  src="img/reset_grid.png"></button>
+					<button height=50px width=50px  class="button button-clear" id="play_pause" onClick="PlayPause();"><img width=50px  src="img/pause.png" id="playPauseImg"></button>  
+				</div>
+				<div >
+					<b>Speed:</b><br>
+					<input type="range" min="1" max="5" value="3" oninput="UpdateSpeed(this.value)" onchange="UpdateSpeed(this.value)" id="speed_slider" > <br>
+					<span id="speed_label">(55 CA step/s - 1 cart-pole step/s) </span><br> <br>
+				</div>
+			</div>
+
+			
+			  <div>
+				<input type="checkbox" id="add_noise" name="add_noise" onClick="UpdateNoise();" checked=false>
+				<label for="coding" class="label-inline">Add noise</label>
+			  </div>
+			  <div>
+				<input type="checkbox" id="show_caption" name="show_caption" onClick="ShowCaption();" checked>
+				<label for="coding" class="label-inline">Show caption</label>
+			  </div>
+		</div>
+
+		</div>
+	</div>
+	</div>
+	<!--
 	<video autoplay loop muted width="750" class="center">
 		<source src="videos/grid_and_envi/noise_no_damage_crop.mp4"
 				type="video/mp4" class="center" >
@@ -60,9 +161,12 @@
 	<script>
 		document.getElementById('vid').play();
 	</script>
+	<div class="caption">A neural cellular automaton controling a cart-pole agent.</div>-->
 
-	<div class="caption">A neural cellular automaton controling a cart-pole agent.</div>
 
+
+  <div class="row">
+  <div class="column column-60 column-offset-20">
 	<h2 class="margin-m"> Introduction </h2>
 		<p>
 			One of the most remarkable feats of life is the developmental process leading to the emergent complexity of the human brain from 
