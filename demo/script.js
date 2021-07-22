@@ -392,12 +392,41 @@ function damageGrid(event, canvas) {
 			return grid_buffer.toTensor();
 		});
 		radiusDam = R;
+		setTimeout(showDamageCircle, 20);
 	}
 };
 
 
-function beginDamage() {
+async function showDamageCircle() {
+	
+	if (radiusDam>1) {
+		if (DrawCap) {
+			disp_grid(grid);
+			drawCircle(ctx_hid, xd, yd, radiusDam*DISPLAY_H/32, "rgba(255, 0, 0, 0.6)");
+			drawCircle(ctx_info, xd, yd, radiusDam*DISPLAY_H/32, "rgba(255, 0, 0, 0.6)");
+			drawCaption(ctx_hid);
+			drawCaption(ctx_info);
+		};
+	}
+	else {
+		if (DrawCap) {
+			disp_grid(grid);
+			drawCaption(ctx_hid);
+			drawCaption(ctx_info);
+		};
+	};
+
+	radiusDam -=1;
+	console.log("rad:",radiusDam);
+	if (radiusDam>0) {
+		setTimeout(showDamageCircle, 20);
+	};
+};
+
+
+function beginDamage(event, canvas) {
 	inDamage = true;
+	damageGrid(event, canvas);
 };
 function endDamage() {
 	inDamage = false;
@@ -429,6 +458,7 @@ var msInterval = 20;
 var ca_step_per_update = 1;
 var obs;
 async function update () { 
+							
 
 							if (model_to_load){
 								CAmodel = await LoadModel(current_model);
@@ -442,13 +472,14 @@ async function update () {
 								document.getElementById("speed_label").innerHTML = "("+ca_step_per_sec+" CA step/s - "+cartpole_step_per_sec+" cart-pole step/s)";
 								prec = t1;
 								
+								
 								disp_grid(grid);
-								if (radiusDam>0) {
+								if (radiusDam>1) {
 									if (DrawCap) {
 										drawCircle(ctx_hid, xd, yd, radiusDam*DISPLAY_H/32, "rgba(255, 0, 0, 0.6)");
 										drawCircle(ctx_info, xd, yd, radiusDam*DISPLAY_H/32, "rgba(255, 0, 0, 0.6)");
 									};
-									radiusDam -= 3*ca_step_per_update;
+									//radiusDam -= 3*ca_step_per_update;
 								};
 								
 								drawCaption(ctx_hid);
@@ -500,7 +531,7 @@ async function update () {
 									nb_step_before_act = 0;
 								};
 							}
-
+							console.log("yo");
 							setTimeout(update, msInterval);
 
 						    };

@@ -17,6 +17,7 @@ class CartPoleEnv {
         this.theta_threshold_radians = 30 * 2 * Math.PI / 360;
         this.x_threshold = 2.4;
 		this.step_nb = 0;
+		this.prev_score = -1;
 		
 		this.sc = DISPLAY_H/3;
 		
@@ -24,6 +25,7 @@ class CartPoleEnv {
   }
   
   reset() {
+	  this.prev_score = this.step_nb;
 	  this.step_nb = 0;
 	  this.state = [0,0,0,0];
 	  
@@ -83,6 +85,11 @@ class CartPoleEnv {
 		c.font = "20px Roboto";
 		var s = "Step "+this.step_nb
 		c.fillText(s, 30, 50); 
+		
+		if (this.prev_score >0) {
+			var prev_s = "Previous score: "+this.prev_score
+			c.fillText(prev_s, 280, 50); 
+		};
 		
 		//draw frame
 		c.beginPath();
