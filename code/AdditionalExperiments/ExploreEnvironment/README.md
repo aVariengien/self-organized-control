@@ -8,10 +8,10 @@ target while using in total the lowest amount of energy.
 
 ------------------
 
-The neural CA presented in `CreaterEnergyBudget` (also the pretrained model) has an energy budget of 100 in the 
+The neural CA presented in `GreaterEnergyBudget` (also the pretrained model) has an energy budget of 100 in the 
 compared to 20 for the one in this folder.
 
-In the two videos in `CreaterEnergyBudget`, the same model is used, only the gird size changes.
+In the two videos in `GreaterEnergyBudget`, the same model is used, only the gird size changes.
 We can observe the formation of a structure around the input and target cell once found.
 This seems to be to stop the propagation of living gliders around the structure. 
 
