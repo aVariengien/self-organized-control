@@ -7,6 +7,9 @@ as well as the code and a [Google Colab notebook](https://colab.research.google.
 to easily  reproduce the results and experiment
 with the pretrained models.
 
+The [paper](https://www.crosslabs.org/articles/imi-2021-01) was published in the Innovations in Machine Intelligence (IMI) journal.
+
+
 ### Structure
 
 In the `code` folder:
@@ -14,3 +17,7 @@ In the `code` folder:
  * The `AdditionalExperiments` contains code and videos about other experiment with neural CA. Each experiment has its own `README.md` file.
  * The notebook `Towards-self-organized-control-notebook.ipynb`
  * The `demo` contains the javascript code used for the interactive demo using tensorflow.js
+ 
+### Cite this article:
+
+A. Variengien, S. Pontes-Filho, T. E. Glover, S. Nichele, "Towards Self-organized Control: Using Neural Cellular Automata to Robustly Control a Cart-pole Agent", Innovations in Machine Intelligence (IMI), vol. 1, pp. 1-14, 2021. DOI: 10.54854/imi2021.01
